@@ -2,7 +2,6 @@
 
 app_plist='com.panoptes.tracker.plist'
 app_dir=/Library/Application\ Support/Panoptes
-logs_dir=/Library/Logs/Panoptes
 la_dir=/Library/LaunchAgents
 
 #  Get the panoptes URL from the user
@@ -13,16 +12,8 @@ echo
 
 #  Copy over application files
 echo "Copying files..."
-
 [ ! -d "${app_dir}" ] && mkdir "${app_dir}"
 cp -f panoptes.py "${app_dir}/"
-chmod 755 "${app_dir}/panoptes.py"
-
-[ ! -d "$logs_dir" ] && mkdir $logs_dir
-touch $logs_dir/panoptes.log
-touch $logs_dir/stdout.log
-touch $logs_dir/stderr.log
-
 echo "  All files have been copied"
 echo 
 
@@ -31,6 +22,7 @@ echo "Configuring launch agent..."
 launchctl unload $app_plist > /dev/null 2>&1
 cp -f $app_plist $la_dir
 cd $la_dir
+chmod 644 $app_plist
 sed -i '' -e 's#{{URL}}#'"$panoptes_url"'#' $app_plist
 echo "  Launch agent configured"
 echo

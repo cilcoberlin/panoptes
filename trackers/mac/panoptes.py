@@ -2,7 +2,6 @@
 
 import datetime
 import httplib
-import logging
 import optparse
 import os
 import platform
@@ -96,10 +95,6 @@ class PanoptesTracker(object):
 	#  The slug used to report Mac OS to Panoptes
 	MAC_OS_SLUG = "mac"
 	
-	#  Logging information
-	LOG_FILE = "/Library/Logs/Panoptes/panoptes.log"
-	LOG_FORMAT = "%(asctime)s %(message)s"
-	
 	_space_split = re.compile(r'\s+')
 	_event_agent_process = re.compile(r'UserEventAgent', re.I)
 	_app_name = re.compile(r'\/([^\/]+)\.app\/')
@@ -108,7 +103,6 @@ class PanoptesTracker(object):
 		
 		self._apps = AppList()
 		self._build_urls(panoptes_url)
-		self._configure_logger()
 		self._session_open = False
 
 	def start(self):
@@ -168,16 +162,12 @@ class PanoptesTracker(object):
 		
 		#  Exit, possibly logging an error
 		if error:
-			self._logger.error(error)
+			self.log_error(error)
 		sys.exit(1 if error else 0)
-		
-	def _configure_logger(self):
-		"""Configure the logger."""
-		self._logger = logging.getLogger("panoptes.py")
-		file_logger = logging.FileHandler(self.LOG_FILE)
-		log_format = logging.Formatter(self.LOG_FORMAT)
-		file_logger.setFormatter(log_format)
-		self._logger.addHandler(file_logger)
+				
+	def log_error(self, error):
+		"""Log errors to stdout."""
+		print error
 		
 	def _get_current_user(self):
 		"""Return the name of the currently logged in user."""
