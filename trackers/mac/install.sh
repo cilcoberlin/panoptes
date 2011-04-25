@@ -23,14 +23,11 @@ launchctl unload $app_plist > /dev/null 2>&1
 cp -f $app_plist $la_dir
 cd $la_dir
 sed -i '' -e 's#{{URL}}#'"$panoptes_url"'#' $app_plist
-cp -f $app_plist /Library/LaunchAgents
-cd /Library/LaunchAgents
-sed -i "s/{{URL}}/$panoptes_url/" $app_plist
 echo "  Launch agent configured"
 echo
 
 #  Run Panoptes
-echo "Starting Panoptes..."
+echo "Loading Panoptes..."
 launchctl load $app_plist > /dev/null 2>&1
-echo "  Panoptes started"
+echo "  Panoptes loaded"
 echo
