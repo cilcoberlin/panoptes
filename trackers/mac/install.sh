@@ -2,6 +2,7 @@
 
 app_plist='com.panoptes.tracker.plist'
 app_dir=/Library/Application\ Support/Panoptes
+logs_dir=/Library/Logs/Panpotes
 la_dir=/Library/LaunchAgents
 
 #  Get the panoptes URL from the user
@@ -12,8 +13,16 @@ echo
 
 #  Copy over application files
 echo "Copying files..."
+
 [ ! -d "${app_dir}" ] && mkdir "${app_dir}"
 cp -f panoptes.py "${app_dir}/"
+chmod 755 "${app_dir}/panoptes.py"
+
+[ ! -d "$logs_dir" ] && mkdir $logs_dir
+touch $logs_dir/panoptes.log
+touch $logs_dir/stdout.log
+touch $logs_dir/stderr.log
+
 echo "  All files have been copied"
 echo 
 

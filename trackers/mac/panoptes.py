@@ -97,7 +97,7 @@ class PanoptesTracker(object):
 	MAC_OS_SLUG = "mac"
 	
 	#  Logging information
-	LOG_FILE = "/Library/Application Support/Logs/Panoptes/panoptes.log"
+	LOG_FILE = "/Library/Logs/Panoptes/panoptes.log"
 	LOG_FORMAT = "%(asctime)s %(message)s"
 	
 	_space_split = re.compile(r'\s+')
