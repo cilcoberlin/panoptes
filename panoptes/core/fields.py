@@ -2,7 +2,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from panoptes.core.models import Location
+from panoptes.core.models import Location, Workstation
 
 from pytz import common_timezones
 
@@ -31,6 +31,20 @@ class MACAddressField(forms.RegexField):
 
 	def __init__(self, *args, **kwargs):
 		super(MACAddressField, self).__init__(self.mac_re, *args, **kwargs)
+		
+class WorkstationByMACAddressField(MACAddressField):
+	"""A field that resolves a MAC address to a Workstation instance."""
+	
+	def clean(self, value):
+		"""
+		Resolve the MAC to a Workstation instance, raising a validation error if no
+		workstation maps to the given MAC address.
+		""" 
+		mac = super(WorkstationByMACAddressField, self).clean(value)
+		workstation = Workstation.objects.trackable_by_mac(mac)	
+		if not workstation:
+			raise forms.ValidationError(_("no workstation found for MAC address %(mac)s") % {'mac': mac})
+		return workstation
 
 class LocationField(forms.ModelChoiceField):
 	"""

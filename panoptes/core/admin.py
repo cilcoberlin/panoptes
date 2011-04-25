@@ -1,11 +1,15 @@
 
 from django.contrib import admin
 
-from panoptes.core.models import Application, ApplicationUse, Location, LayoutCell, LayoutRow, OSType, ReportedApplication, Session, Workstation
+from panoptes.core.models import *
 
 class LayoutCellInline(admin.TabularInline):
 
 	model = LayoutCell
+	
+class MACAddressInline(admin.TabularInline):
+	
+	model = MACAddress
 
 class ApplicationAdmin(admin.ModelAdmin):
 
@@ -50,7 +54,8 @@ class SessionAdmin(admin.ModelAdmin):
 
 class WorkstationAdmin(admin.ModelAdmin):
 
-	list_display = ('name', 'location', 'mac_address', 'track')
+	inlines = [MACAddressInline]
+	list_display = ('name', 'location', 'track')
 	ordering = ('name',)
 
 admin.site.register(Application, ApplicationAdmin)

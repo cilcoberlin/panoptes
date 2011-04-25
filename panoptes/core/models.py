@@ -161,16 +161,28 @@ class WorkstationManager(models.Manager):
 		
 		"""
 		return self.filter(location=location, track=True).order_by('name')
+	
+	def trackable_by_mac(self, mac_address):
+		"""Return the trackable workstation with the given MAC address.
+		
+		Arguments:
+		mac_address -- a string of a workstation's MAC adress
+		
+		Returns: a single Workstation instance or None
+		"""
+		try:
+			return MACAddress.objects.get(address=mac_address, workstation__track=True).workstation
+		except MACAddress.DoesNotExist:
+			return None
 
 class Workstation(models.Model):
 	"""A workstation at a location, identified by its MAC address."""
 
-	objects     = WorkstationManager()
+	objects = WorkstationManager()
 
-	mac_address = MACAddressField(verbose_name=_("MAC address"), unique=True)
-	name        = models.CharField(max_length=50, verbose_name=_("name"))
-	location    = models.ForeignKey(Location, verbose_name=_("location"))
-	track       = models.BooleanField(verbose_name=_("track usage?"), default=True)
+	name     = models.CharField(max_length=50, verbose_name=_("name"))
+	location = models.ForeignKey(Location, verbose_name=_("location"))
+	track    = models.BooleanField(verbose_name=_("track usage?"), default=True)
 
 	class Meta:
 
@@ -180,6 +192,28 @@ class Workstation(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+class MACAddress(models.Model):
+	"""A MAC address for a NIC on a workstation."""
+	
+	NIC_CHOICES = (
+		("ethernet", _("ethernet")),
+		("wireless", _("wireless")),
+		("other", _("other"))
+	)
+	
+	workstation = models.ForeignKey(Workstation, verbose_name=_("workstation"), related_name="mac_addresses")
+	address     = MACAddressField(verbose_name=_("MAC address"), unique=True)
+	nic         = models.CharField(choices=NIC_CHOICES, max_length=25, verbose_name=_("NIC type"))
+	
+	class Meta:
+		
+		app_label = "panoptes"
+		verbose_name = _("MAC address")
+		verbose_name_plural = _("MAC addresses")
+		
+	def __unicode__(self):
+		return self.address
 
 class OSTypeManager(models.Manager):
 	"""Custom manager for the OSType model."""
@@ -220,37 +254,31 @@ class OSType(models.Model):
 class SessionManager(models.Manager):
 	"""Custom manager for the Session model."""
 
-	def start_session(self, mac_address, os_instance):
+	def start_session(self, workstation, os_instance):
 		"""Create a new session for the given workstation.
 		
 		If an error occurs during the creation of the session, None is returned and
 		the session is not tracked.
 		
 		Arguments:
-		mac_address -- a string of the workstation's MAC address
+		workstation -- a Workstation instance
 		os_instance -- an instance of an OSType model
 		
 		Returns: a new Session instance
 		"""
 
-		#  If the given MAC address and OS slug name resolve to valid
-		#  Workstation and OSType instances, clear any unclosed sessions for the
-		#  workstation and then create a new session
-		if not os_instance:
-			return None
-		try:
-			workstation = Workstation.objects.get(mac_address=mac_address, track=True)
-		except Workstation.DoesNotExist:
-			return None
-		else:
+		#  Clear any unclosed sessions before opening a new one
+		if workstation and os_instance:
 			self.filter(workstation=workstation, end__isnull=True).delete()
 			return self.create(workstation=workstation, os_type=os_instance)
+		else:
+			return None
 
-	def end_session(self, mac_address, apps_used=[], time_offset=0):
-		"""
-		Finalize the session associated with the workstation identified by the
-		string `mac_address`, returning the session if it was successfully
-		ended, and otherwise returning None.
+	def end_session(self, workstation, apps_used=[], time_offset=0):
+		"""Finalize the session associated with the workstation.
+		
+		If the workstation is valid and the session was properly closed, the Session
+		instance is returned.  If the session could not be closed, None is given.
 
 		The `apps_used` argument is a list of two-tuples of the form
 		(reported_app_name, duration), with the duration expressed as an integer of
@@ -259,14 +287,23 @@ class SessionManager(models.Manager):
 		The `time_offset` argument is an optional number of seconds, either
 		positive or negative, to apply to the end time recorded for the session.
 		This can be used to decrease the session length if the end is occurring
-		due to an automatic idle logout.
+		due to an automatic idle logout, for example.
+		
+		Arguments:
+		
+		workstation -- a Workstation instance
+		apps_used -- a string of apps used
+		time_offset -- an integer of the number of seconds to add to the end time
+		
+		Returns: a Session instance on success or None on failure
+		 
 		"""
 
 		#  Close the most recent unclosed session, applying the time offset if
 		#  needed and performing a sanity check to prevent sessions with an end
 		#  time less than their start time
 		try:
-			session = self.filter(workstation__mac_address=mac_address, end__isnull=True).order_by('-end')[0]
+			session = self.filter(workstation=workstation, end__isnull=True).order_by('-end')[0]
 		except IndexError:
 			return None
 		else:

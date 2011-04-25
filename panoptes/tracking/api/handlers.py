@@ -33,8 +33,8 @@ class SessionHandler(BaseHandler):
 		
 		data = request.form.cleaned_data
 
-		if AccountFilter.objects.is_user_loggable(data['user'], data['mac']):
-			session = Session.objects.start_session(data['mac'], data['os'])
+		if AccountFilter.objects.is_user_loggable(data['user'], data['workstation']):
+			session = Session.objects.start_session(data['workstation'], data['os'])
 			return rc.CREATED if session else rc.BAD_REQUEST
 		else:
 			return rc.BAD_REQUEST
@@ -64,5 +64,5 @@ class SessionHandler(BaseHandler):
 
 		data = request.form.cleaned_data
 				
-		session = Session.objects.end_session(data['mac'], data['apps'], data['offset'])
+		session = Session.objects.end_session(data['workstation'], data['apps'], data['offset'])
 		return rc.ALL_OK if session else rc.BAD_REQUEST

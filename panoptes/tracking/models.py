@@ -38,24 +38,21 @@ class AccountListField(models.CharField):
 class AccountFilterManager(models.Manager):
 	"""Custom manager for the AccountFilter model."""
 
-	def is_user_loggable(self, username, mac_address):
+	def is_user_loggable(self, username, workstation):
 		"""
 		Return True if the user whose username is provided in the string
 		`username` should have their usage sessions for the workstation whose
 		MAC address is given in the `mac_address` string.
 		"""
 	
-		try:
-			location = Workstation.objects.get(mac_address=mac_address).location
-		except Workstation.DoesNotExist:
+		if not workstation:
 			return False
+		if username:
+			return all([
+				account_filter.user_is_trackable(username)
+				for account_filter in self.filter(location=workstation.location)])
 		else:
-			if username:
-				return all([
-					account_filter.user_is_trackable(username)
-					for account_filter in self.filter(location=location)])
-			else:
-				return True
+			return True
 
 class AccountFilter(models.Model):
 	"""

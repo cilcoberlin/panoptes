@@ -1,7 +1,7 @@
 
 from django import forms
 
-from panoptes.core.fields import MACAddressField
+from panoptes.core.fields import WorkstationByMACAddressField
 from panoptes.core.models import OSType
 import panoptes.settings as _settings
 
@@ -10,7 +10,7 @@ import isodate
 class CreateSessionForm(forms.Form):
 	"""A form used to validate POST data passed when creating a session."""
 
-	mac        = MACAddressField()
+	mac        = WorkstationByMACAddressField()
 	os_type    = forms.ChoiceField(choices=_settings.OS_CHOICES)
 	os_version = forms.CharField(required=False)
 	user       = forms.CharField(required=False)
@@ -23,13 +23,16 @@ class CreateSessionForm(forms.Form):
 		self.cleaned_data['os'] = OSType.objects.get_or_create(
 									self.cleaned_data.get('os_type', None),
 									self.cleaned_data.get('os_version', None))
+		
+		#  Create an alias for the MAC address
+		self.cleaned_data['workstation'] = self.cleaned_data.get('mac', None)
 						
 		return self.cleaned_data
 
 class EndSessionForm(forms.Form):
 	"""A form used to validate PUT data passed when ending a session."""
 
-	mac    = MACAddressField()
+	mac    = WorkstationByMACAddressField()
 	apps   = forms.CharField(required=False)
 	offset = forms.IntegerField(required=False)
 
@@ -73,4 +76,13 @@ class EndSessionForm(forms.Form):
 		if offset is None:
 			offset = 0
 		return offset
+	
+	def clean(self):
+		"""Normalize some of the passed data."""
+		
+		#  Create an alias for the MAC address
+		self.cleaned_data['workstation'] = self.cleaned_data.get('mac', None)
+	
+		return self.cleaned_data
+	
 		
