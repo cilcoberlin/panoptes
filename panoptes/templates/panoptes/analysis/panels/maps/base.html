@@ -1,0 +1,46 @@
+
+{% load i18n %}
+
+{% if rows %}
+	
+	<table id="map-{{ location.slug }}" class="map map__{{ location.slug }}">
+		<tbody>
+	
+			{% for row in rows %}
+	
+				<tr class="row__{{ forloop.counter0 }}">
+	
+					{% for cell in row %}
+	
+						{% if cell.is_workstation %}
+	
+							<td id="workstation-{{ cell.workstation.name|slugify }}" class="cell workstation {% if cell.overlay %}has-data intensity__{{ cell.overlay.intensity }}{% else %}no-data{% endif %}">
+		
+								<p class="name">{{ cell.workstation.name }}</p>
+	
+								{% if cell.overlay %}
+									<p class="overlay">{{ cell.overlay.data }}</p>
+								{% endif %}
+								
+							</td>
+	
+						{% else %}
+	
+							<td class="cell spacer"></td>
+	
+						{% endif %}
+	
+					{% endfor %}
+	
+				</tr>
+	
+			{% endfor %}
+	
+		</tbody>
+	</table>
+
+{% else %}
+
+	<p>{% trans "No map could be generated." %}</p>
+
+{% endif %}

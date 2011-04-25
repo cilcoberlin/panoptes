@@ -1,0 +1,38 @@
+
+{% load panoptes_core %}
+
+<fieldset class="core">
+
+	{{ lens_form.non_field_errors }}
+
+    {% form_field lens_form.location %}
+	{% form_field lens_form.lens %}
+
+</fieldset>
+
+<fieldset class="dates">
+
+    {% form_field lens_form.start %}
+    {% form_field lens_form.end %}
+	
+</fieldset>
+
+<fieldset class="times">
+
+	{% form_field lens_form.start_time %}
+	{% form_field lens_form.end_time %}
+
+</fieldset>
+
+<fieldset class="weekdays">
+
+	{% multi_form_field lens_form.weekdays %}
+
+</fieldset>
+
+<fieldset class="hidden">
+
+	{{ lens_form.x_detail }}
+	{{ lens_form.y_detail }}
+	
+</fieldset>

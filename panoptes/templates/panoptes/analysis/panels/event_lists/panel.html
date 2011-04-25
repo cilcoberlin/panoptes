@@ -1,0 +1,95 @@
+{% extends "panoptes/analysis/panel.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Events" %}{% endblock %}
+
+{% block content %}
+
+	{% if event_list %}
+		
+		{% for calendar_events in event_list.events_by_calendar %}
+			<table class="event-list" summary="{% blocktrans with calendar_events.calendar.name|title as location  %}Events at {{ location }}{% endblocktrans %}">
+				
+				<caption>{{ calendar_events.calendar.name|title }}</caption>
+				
+				<thead>
+					<tr>
+						<th>{% trans "Event" %}</th>
+						<th>{% trans "Start" %}</th>
+						<th>{% trans "End" %}</th>
+						<th>{% trans "Frequency" %}</th>
+					</tr>
+				</thead>
+					
+				<tbody class="events">
+					
+					{% for event in calendar_events.events %}
+						<tr class="event">
+							<td class="name">{{ event.title|title }}</td>
+							<td class="start">{{ event.verbose_start }}</td>
+							<td class="end">{{ event.verbose_end }}</td>
+							<td class="frequency">
+								
+								{% if event.is_repeating %}
+									
+									<p class="days">
+										
+										{% if event.repeat_rule.is_daily %}
+											{% trans "Daily" %}
+										{% endif %}
+										
+										{% if event.repeat_rule.is_weekly %}
+											{% if event.repeat_rule.weekdays %}
+												{{ event.repeat_rule.weekdays|join:", " }}
+											{% else %}
+												{% trans "Weekly" %}
+											{% endif %}
+										{% endif %}
+										
+										{% if event.repeat_rule.is_monthly %}
+											{% trans "Monthly" %}
+										{% endif %}
+										
+										{% if event.repeat_rule.is_yearly %}
+											{% trans "Yearly" %}
+										{% endif %}
+									
+									</p>
+								
+									{% if event.repeat_rule.has_time_bounds %}
+										<p class="bounds">
+											{{ event.repeat_rule.starts|date }}
+											{% if event.repeat_rule.starts and event.repeat_rule.ends %}&ndash;{% endif %}
+											{{ event.repeat_rule.ends|date }}
+										</p>
+									{% endif %}
+							
+								{% else %}
+									{% trans "Single event" %}
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+					
+				</tbody>
+			</table>				
+		{% endfor %}
+	
+	{% else %}
+	
+		<p id="no-events">
+			
+			{% if event_list.has_requested_events %}
+				{% trans "No events found." %}
+			{% else %}
+				{% blocktrans with filters.x_axis.name as x %}
+					Select a {{ x }} to view the events associated with it.
+				{% endblocktrans %}
+			{% endif %}
+			
+		</p>
+		
+	{% endif %}
+
+{% endblock %}

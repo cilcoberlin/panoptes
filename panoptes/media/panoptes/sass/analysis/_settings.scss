@@ -1,0 +1,58 @@
+
+//  Background colors
+$page-bg-color: #fff;
+$header-bg-color: #333;
+$error-bg-color: #fcc;
+$selected-bg-color: #057; 
+$sidebar-bg-color: #eee; 
+
+//  Text colors
+$page-text-color: #333;
+$header-text-color: #fff;
+$header-text-shadow-color: #000;
+$error-text-color: #a00;
+$soft-text-color: #777;
+$selected-text-color: #fff;
+$title-text-color: #ffc;
+$panel-title-color: #e90;
+$panel-subtitle-color: #057;
+
+//  Table colors
+$table-header-bg-color: #eee;
+$table-header-text-color: #057;
+
+//  Link colors
+$base-link-color: #057;
+$visited-link-color: #057;
+$hover-link-color: #379;
+
+//  Form colors
+$button-bg-color: #fff;
+$button-border-color: #888;
+$button-accent-border-color: #bbb;
+$button-text-color: #000;
+$form-text-color: #057;
+
+//  Abstract colors
+$border-color: #ccc;
+
+//  Abstract data visualization colors
+$data-bg-color: #057;
+$data-bg-null-color: #e0e0e0;
+$data-bg-emphasis-color: #ff9;
+$data-bg-strong-color: #f80;
+$data-border-color: #ccc;
+$data-secondary-border-color: #eee;
+$data-text-color: #fff;
+$data-min-color: #ccc;
+$data-max-color: $data-bg-color;
+
+//  Loading colors
+$loading-bg-color: #000;
+$loading-opacity: 0.5;
+$loading-text-color: #044;
+
+//  Sidebar sizing
+$sidebar-padding: 1.5em;
+$sidebar-width: 28em;
+$content-padding: 3em;

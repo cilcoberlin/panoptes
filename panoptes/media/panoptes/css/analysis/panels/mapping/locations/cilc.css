@@ -1,0 +1,32 @@
+#map-cilc {
+  width: 100%; }
+  #map-cilc .workstation {
+    border: 3px solid white; }
+  #map-cilc #workstation-a1, #map-cilc #workstation-b1, #map-cilc #workstation-c1, #map-cilc #workstation-d1,
+  #map-cilc #workstation-e1, #map-cilc #workstation-f1 {
+    -moz-border-radius-bottomleft: 25%;
+    -webkit-border-bottom-left-radius: 25%;
+    border-bottom-left-radius: 25%;
+    border-bottom: none;
+    border-left: none; }
+  #map-cilc #workstation-a2, #map-cilc #workstation-b2, #map-cilc #workstation-c2, #map-cilc #workstation-d2,
+  #map-cilc #workstation-e2, #map-cilc #workstation-f2 {
+    -moz-border-radius-topleft: 25%;
+    -webkit-border-top-left-radius: 25%;
+    border-top-left-radius: 25%;
+    border-left: none;
+    border-top: none; }
+  #map-cilc #workstation-a3, #map-cilc #workstation-b3, #map-cilc #workstation-c3, #map-cilc #workstation-d3,
+  #map-cilc #workstation-e3, #map-cilc #workstation-f3 {
+    -moz-border-radius-topright: 25%;
+    -webkit-border-top-right-radius: 25%;
+    border-top-right-radius: 25%;
+    border-right: none;
+    border-top: none; }
+  #map-cilc #workstation-a4, #map-cilc #workstation-b4, #map-cilc #workstation-c4, #map-cilc #workstation-d4,
+  #map-cilc #workstation-e4, #map-cilc #workstation-f4 {
+    -moz-border-radius-bottomright: 25%;
+    -webkit-border-bottom-right-radius: 25%;
+    border-bottom-right-radius: 25%;
+    border-bottom: none;
+    border-right: none; }

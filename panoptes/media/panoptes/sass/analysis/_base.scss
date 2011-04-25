@@ -1,0 +1,149 @@
+
+@import "../analysis/settings";
+@import "../core/mixins";
+
+body {
+	background: $sidebar-bg-color url("../images/body-bg.jpg") repeat-y ($sidebar-width - $content-padding) 0;
+	color: $page-text-color;	
+	font-size: 100%;
+	@include sans-serif;
+}
+
+html>body {
+	font-size: 12px;
+}
+
+a {
+	color: $base-link-color;
+	text-decoration: none;
+}
+a:visited {
+	color: $visited-link-color;
+}
+a:hover {
+	color: $hover-link-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+
+table { 
+	thead {
+		th {
+			text-align: left;
+		}
+	}
+}
+
+#header {
+	background: $header-bg-color;
+	border-bottom: 1px solid lighten($header-bg-color, 40%);
+	@include box-shadow(rgba(0, 0, 0, 0.2), 0, 0, 20px, 0);
+	color: $header-text-color;
+	height: 3em;
+	padding: 1.5em 0;
+	@include sharp-text-shadow($header-text-shadow-color);
+	
+	#title {
+		background: url("../images/analytics-icon.png") no-repeat right 0.65em;
+		color: $title-text-color;
+		float: left;
+		font-size: 1.167em;
+		line-height: 1.286em * 2;
+		padding-left: $sidebar-padding * 0.857;
+		padding-right: 25px;
+		text-transform: uppercase;
+		
+		.location {
+			color: $header-text-color;
+			font-weight: bold;
+		}
+	}
+	#subtitle {
+		font-size: 2em;
+		line-height: 1.5em;
+		margin-left: $sidebar-width * 0.5;
+		
+		.axes, .filter {
+			display: block;
+			float: left;
+		}
+		.axes {
+			
+		}
+		.filter {
+			border: 1px solid lighten($header-bg-color, 20%);
+			color: $title-text-color;
+			font-size: 0.5em;
+			line-height: 1.5em;
+			margin: 0.75em 0 0.75em 3em;
+			padding: 0 1em;
+			@include rounded("all", 1.5em);
+		}
+	}
+}
+
+#content {
+	padding-top: 1.5em;
+	margin-left: $sidebar-width;
+	clear: both;	
+}
+
+#footer {
+	background: $header-bg-color;
+	border-top: 1px solid $border-color;
+	clear: both;
+	color: $header-text-color;
+	padding: 1.5em 0;
+	width: $sidebar-width - $content-padding;
+	
+	p {
+		line-height: 1.5em;
+		padding-left: $sidebar-padding;
+		
+		a {
+			color: $title-text-color;
+		}	
+	}
+}
+
+//  An global overlay displayed when loading data via Ajax
+#ajax-loading {
+
+	position: fixed;
+	height: 100%;
+	width: 100%;
+
+	.overlay {	
+		background: $loading-bg-color;
+		@include opacity($loading-opacity);
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		z-index: 9000;
+	}
+	
+	.loading {
+		background: $page-bg-color;
+		border: 3px double lighten($loading-bg-color, $loading-opacity);
+		@include box-shadow($loading-bg-color, 0, 5px, 10px);
+		margin: 0 auto;
+		padding: 1.5em;
+		position: relative;
+		@include rounded("all", 18px);
+		text-align: center;
+		top: 50%;
+		width: 10em;
+		z-index: 9001;
+	
+		.message {
+			background: url("../images/loading.gif") no-repeat top center;
+			color: $loading-text-color;
+			margin-top: 0.5em;
+			padding-top: 2em;
+		}
+	}
+	
+	
+}

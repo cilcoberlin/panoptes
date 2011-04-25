@@ -1,0 +1,47 @@
+
+@import "../../../settings";
+@import "../../../../core/mixins";
+
+$table-rounded-radius: 25%;
+
+#map-cilc {
+
+	width: 100%;
+	
+	.workstation {
+		border: 3px solid $page-bg-color;
+	}
+
+	//  "1" workstations are always in the lower-left
+	#workstation-a1, #workstation-b1, #workstation-c1, #workstation-d1,
+	#workstation-e1, #workstation-f1 {
+		@include rounded("bottom-left", $table-rounded-radius);
+		border-bottom: none;
+		border-left: none;
+	}
+
+	//  "2" workstations are always in the upper-left
+	#workstation-a2, #workstation-b2, #workstation-c2, #workstation-d2,
+	#workstation-e2, #workstation-f2 {
+		@include rounded("top-left", $table-rounded-radius);
+		border-left: none;
+		border-top: none;
+	}
+
+	//  "3" workstations are always in the upper-right
+	#workstation-a3, #workstation-b3, #workstation-c3, #workstation-d3,
+	#workstation-e3, #workstation-f3 {
+		@include rounded("top-right", $table-rounded-radius);
+		border-right: none;
+		border-top: none;
+	}
+	
+	//  "4" workstations are always in the bottom-right
+	#workstation-a4, #workstation-b4, #workstation-c4, #workstation-d4,
+	#workstation-e4, #workstation-f4 {
+		@include rounded("bottom-right", $table-rounded-radius);
+		border-bottom: none;
+		border-right: none;
+	}	
+	
+}

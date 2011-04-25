@@ -1,0 +1,28 @@
+{% extends "panoptes/analysis/panel.html" %}
+
+{% load i18n %}
+{% load panoptes_analysis %}
+
+{% block title %}{% trans "Usage Graph" %}{% endblock %}
+
+{% block subtitle %}
+	{% if filters %}
+		{% blocktrans with filters.x_axis.name as x and filters.y_axis.name|capfirst as y %}
+			{{ y }} per {{ x }}
+		{% endblocktrans %}
+	{% endif %}
+{% endblock %}
+
+{% block meta %}
+	{% simple_filters filters %}
+{% endblock %}
+
+{% block content %}
+
+	{% if chart %}
+		{{ chart }}
+	{% else %}
+		{% trans "No chart could be generated" %}
+	{% endif %}
+
+{% endblock %}

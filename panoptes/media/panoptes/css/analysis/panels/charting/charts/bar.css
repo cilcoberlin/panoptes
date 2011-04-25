@@ -1,0 +1,330 @@
+#panel-chart .content {
+  padding-left: 3em; }
+
+#panel-chart .chart.bar {
+  border-bottom: 1px solid #cccccc;
+  height: 30em;
+  position: relative;
+  width: 100%; }
+  #panel-chart .chart.bar caption {
+    display: none;
+    text-align: left; }
+  #panel-chart .chart.bar thead {
+    display: none; }
+  #panel-chart .chart.bar .y-labels {
+    background-color: transparent;
+    height: 100%;
+    margin-left: -3em;
+    position: absolute;
+    width: 100%;
+    z-index: -1; }
+    #panel-chart .chart.bar .y-labels .label {
+      display: block; }
+      #panel-chart .chart.bar .y-labels .label .x {
+        border-bottom: 1px solid #cccccc;
+        display: block;
+        position: absolute;
+        width: 100%; }
+      #panel-chart .chart.bar .y-labels .label .y {
+        border-right: 1px dotted #cccccc;
+        font-weight: bold;
+        line-height: 1.5em;
+        position: absolute;
+        text-align: center;
+        width: 3em; }
+  #panel-chart .chart.bar .y-labels.labels__1 .label {
+    height: 100%; }
+    #panel-chart .chart.bar .y-labels.labels__1 .label .y {
+      height: 100%; }
+  #panel-chart .chart.bar .y-labels.labels__2 .label {
+    height: 50%; }
+    #panel-chart .chart.bar .y-labels.labels__2 .label .y {
+      height: 50%; }
+  #panel-chart .chart.bar .y-labels.labels__3 .label {
+    height: 33.333%; }
+    #panel-chart .chart.bar .y-labels.labels__3 .label .y {
+      height: 33.333%; }
+  #panel-chart .chart.bar .y-labels.labels__4 .label {
+    height: 25%; }
+    #panel-chart .chart.bar .y-labels.labels__4 .label .y {
+      height: 25%; }
+  #panel-chart .chart.bar .y-labels.labels__5 .label {
+    height: 20%; }
+    #panel-chart .chart.bar .y-labels.labels__5 .label .y {
+      height: 20%; }
+  #panel-chart .chart.bar .y-labels.labels__6 .label {
+    height: 16.667%; }
+    #panel-chart .chart.bar .y-labels.labels__6 .label .y {
+      height: 16.667%; }
+  #panel-chart .chart.bar .y-labels.labels__7 .label {
+    height: 14.286%; }
+    #panel-chart .chart.bar .y-labels.labels__7 .label .y {
+      height: 14.286%; }
+  #panel-chart .chart.bar .y-labels.labels__8 .label {
+    height: 12.5%; }
+    #panel-chart .chart.bar .y-labels.labels__8 .label .y {
+      height: 12.5%; }
+  #panel-chart .chart.bar .y-labels.labels__9 .label {
+    height: 11.111%; }
+    #panel-chart .chart.bar .y-labels.labels__9 .label .y {
+      height: 11.111%; }
+  #panel-chart .chart.bar .y-labels.labels__10 .label {
+    height: 10%; }
+    #panel-chart .chart.bar .y-labels.labels__10 .label .y {
+      height: 10%; }
+  #panel-chart .chart.bar .points {
+    display: table-row-group;
+    display: table-footer-group; }
+  #panel-chart .chart.bar .point {
+    cursor: pointer;
+    display: table-cell;
+    position: relative;
+    vertical-align: bottom; }
+    #panel-chart .chart.bar .point .x {
+      display: none; }
+    #panel-chart .chart.bar .point .y {
+      display: block;
+      width: 90%; }
+      #panel-chart .chart.bar .point .y .detail-link {
+        background-color: #005577;
+        display: block;
+        min-width: 0.25em;
+        text-indent: -9000em; }
+      #panel-chart .chart.bar .point .y .bar-chart-detail {
+        background: white;
+        border: 1px solid #005577;
+        font-weight: bold;
+        line-height: 1.5em;
+        padding: 0.75em 1.5em;
+        position: absolute;
+        -moz-border-radius: 1.5em;
+        -webkit-border-radius: 1.5em;
+        border-radius: 1.5em;
+        text-align: center;
+        z-index: 9001; }
+  #panel-chart .chart.bar .point.keypoint .x {
+    border-left: 1px solid #eeeeee;
+    bottom: -1.5em;
+    display: block;
+    line-height: 1.5em;
+    padding-left: 0.375em;
+    padding-top: 30em;
+    position: absolute; }
+  #panel-chart .chart.bar .point.keypoint .y {
+    border-left: 1px solid #cccccc; }
+  #panel-chart .chart.bar .point.active .detail-link {
+    background-color: #ffff99; }
+  #panel-chart .chart.bar .point.chosen .detail-link {
+    background-color: #ff8800; }
+  #panel-chart .chart.bar .y.percent__1 .detail-link {
+    height: 0.3em; }
+  #panel-chart .chart.bar .y.percent__2 .detail-link {
+    height: 0.6em; }
+  #panel-chart .chart.bar .y.percent__3 .detail-link {
+    height: 0.9em; }
+  #panel-chart .chart.bar .y.percent__4 .detail-link {
+    height: 1.2em; }
+  #panel-chart .chart.bar .y.percent__5 .detail-link {
+    height: 1.5em; }
+  #panel-chart .chart.bar .y.percent__6 .detail-link {
+    height: 1.8em; }
+  #panel-chart .chart.bar .y.percent__7 .detail-link {
+    height: 2.1em; }
+  #panel-chart .chart.bar .y.percent__8 .detail-link {
+    height: 2.4em; }
+  #panel-chart .chart.bar .y.percent__9 .detail-link {
+    height: 2.7em; }
+  #panel-chart .chart.bar .y.percent__10 .detail-link {
+    height: 3em; }
+  #panel-chart .chart.bar .y.percent__11 .detail-link {
+    height: 3.3em; }
+  #panel-chart .chart.bar .y.percent__12 .detail-link {
+    height: 3.6em; }
+  #panel-chart .chart.bar .y.percent__13 .detail-link {
+    height: 3.9em; }
+  #panel-chart .chart.bar .y.percent__14 .detail-link {
+    height: 4.2em; }
+  #panel-chart .chart.bar .y.percent__15 .detail-link {
+    height: 4.5em; }
+  #panel-chart .chart.bar .y.percent__16 .detail-link {
+    height: 4.8em; }
+  #panel-chart .chart.bar .y.percent__17 .detail-link {
+    height: 5.1em; }
+  #panel-chart .chart.bar .y.percent__18 .detail-link {
+    height: 5.4em; }
+  #panel-chart .chart.bar .y.percent__19 .detail-link {
+    height: 5.7em; }
+  #panel-chart .chart.bar .y.percent__20 .detail-link {
+    height: 6em; }
+  #panel-chart .chart.bar .y.percent__21 .detail-link {
+    height: 6.3em; }
+  #panel-chart .chart.bar .y.percent__22 .detail-link {
+    height: 6.6em; }
+  #panel-chart .chart.bar .y.percent__23 .detail-link {
+    height: 6.9em; }
+  #panel-chart .chart.bar .y.percent__24 .detail-link {
+    height: 7.2em; }
+  #panel-chart .chart.bar .y.percent__25 .detail-link {
+    height: 7.5em; }
+  #panel-chart .chart.bar .y.percent__26 .detail-link {
+    height: 7.8em; }
+  #panel-chart .chart.bar .y.percent__27 .detail-link {
+    height: 8.1em; }
+  #panel-chart .chart.bar .y.percent__28 .detail-link {
+    height: 8.4em; }
+  #panel-chart .chart.bar .y.percent__29 .detail-link {
+    height: 8.7em; }
+  #panel-chart .chart.bar .y.percent__30 .detail-link {
+    height: 9em; }
+  #panel-chart .chart.bar .y.percent__31 .detail-link {
+    height: 9.3em; }
+  #panel-chart .chart.bar .y.percent__32 .detail-link {
+    height: 9.6em; }
+  #panel-chart .chart.bar .y.percent__33 .detail-link {
+    height: 9.9em; }
+  #panel-chart .chart.bar .y.percent__34 .detail-link {
+    height: 10.2em; }
+  #panel-chart .chart.bar .y.percent__35 .detail-link {
+    height: 10.5em; }
+  #panel-chart .chart.bar .y.percent__36 .detail-link {
+    height: 10.8em; }
+  #panel-chart .chart.bar .y.percent__37 .detail-link {
+    height: 11.1em; }
+  #panel-chart .chart.bar .y.percent__38 .detail-link {
+    height: 11.4em; }
+  #panel-chart .chart.bar .y.percent__39 .detail-link {
+    height: 11.7em; }
+  #panel-chart .chart.bar .y.percent__40 .detail-link {
+    height: 12em; }
+  #panel-chart .chart.bar .y.percent__41 .detail-link {
+    height: 12.3em; }
+  #panel-chart .chart.bar .y.percent__42 .detail-link {
+    height: 12.6em; }
+  #panel-chart .chart.bar .y.percent__43 .detail-link {
+    height: 12.9em; }
+  #panel-chart .chart.bar .y.percent__44 .detail-link {
+    height: 13.2em; }
+  #panel-chart .chart.bar .y.percent__45 .detail-link {
+    height: 13.5em; }
+  #panel-chart .chart.bar .y.percent__46 .detail-link {
+    height: 13.8em; }
+  #panel-chart .chart.bar .y.percent__47 .detail-link {
+    height: 14.1em; }
+  #panel-chart .chart.bar .y.percent__48 .detail-link {
+    height: 14.4em; }
+  #panel-chart .chart.bar .y.percent__49 .detail-link {
+    height: 14.7em; }
+  #panel-chart .chart.bar .y.percent__50 .detail-link {
+    height: 15em; }
+  #panel-chart .chart.bar .y.percent__51 .detail-link {
+    height: 15.3em; }
+  #panel-chart .chart.bar .y.percent__52 .detail-link {
+    height: 15.6em; }
+  #panel-chart .chart.bar .y.percent__53 .detail-link {
+    height: 15.9em; }
+  #panel-chart .chart.bar .y.percent__54 .detail-link {
+    height: 16.2em; }
+  #panel-chart .chart.bar .y.percent__55 .detail-link {
+    height: 16.5em; }
+  #panel-chart .chart.bar .y.percent__56 .detail-link {
+    height: 16.8em; }
+  #panel-chart .chart.bar .y.percent__57 .detail-link {
+    height: 17.1em; }
+  #panel-chart .chart.bar .y.percent__58 .detail-link {
+    height: 17.4em; }
+  #panel-chart .chart.bar .y.percent__59 .detail-link {
+    height: 17.7em; }
+  #panel-chart .chart.bar .y.percent__60 .detail-link {
+    height: 18em; }
+  #panel-chart .chart.bar .y.percent__61 .detail-link {
+    height: 18.3em; }
+  #panel-chart .chart.bar .y.percent__62 .detail-link {
+    height: 18.6em; }
+  #panel-chart .chart.bar .y.percent__63 .detail-link {
+    height: 18.9em; }
+  #panel-chart .chart.bar .y.percent__64 .detail-link {
+    height: 19.2em; }
+  #panel-chart .chart.bar .y.percent__65 .detail-link {
+    height: 19.5em; }
+  #panel-chart .chart.bar .y.percent__66 .detail-link {
+    height: 19.8em; }
+  #panel-chart .chart.bar .y.percent__67 .detail-link {
+    height: 20.1em; }
+  #panel-chart .chart.bar .y.percent__68 .detail-link {
+    height: 20.4em; }
+  #panel-chart .chart.bar .y.percent__69 .detail-link {
+    height: 20.7em; }
+  #panel-chart .chart.bar .y.percent__70 .detail-link {
+    height: 21.0em; }
+  #panel-chart .chart.bar .y.percent__71 .detail-link {
+    height: 21.3em; }
+  #panel-chart .chart.bar .y.percent__72 .detail-link {
+    height: 21.6em; }
+  #panel-chart .chart.bar .y.percent__73 .detail-link {
+    height: 21.9em; }
+  #panel-chart .chart.bar .y.percent__74 .detail-link {
+    height: 22.2em; }
+  #panel-chart .chart.bar .y.percent__75 .detail-link {
+    height: 22.5em; }
+  #panel-chart .chart.bar .y.percent__76 .detail-link {
+    height: 22.8em; }
+  #panel-chart .chart.bar .y.percent__77 .detail-link {
+    height: 23.1em; }
+  #panel-chart .chart.bar .y.percent__78 .detail-link {
+    height: 23.4em; }
+  #panel-chart .chart.bar .y.percent__79 .detail-link {
+    height: 23.7em; }
+  #panel-chart .chart.bar .y.percent__80 .detail-link {
+    height: 24em; }
+  #panel-chart .chart.bar .y.percent__81 .detail-link {
+    height: 24.3em; }
+  #panel-chart .chart.bar .y.percent__82 .detail-link {
+    height: 24.6em; }
+  #panel-chart .chart.bar .y.percent__83 .detail-link {
+    height: 24.9em; }
+  #panel-chart .chart.bar .y.percent__84 .detail-link {
+    height: 25.2em; }
+  #panel-chart .chart.bar .y.percent__85 .detail-link {
+    height: 25.5em; }
+  #panel-chart .chart.bar .y.percent__86 .detail-link {
+    height: 25.8em; }
+  #panel-chart .chart.bar .y.percent__87 .detail-link {
+    height: 26.1em; }
+  #panel-chart .chart.bar .y.percent__88 .detail-link {
+    height: 26.4em; }
+  #panel-chart .chart.bar .y.percent__89 .detail-link {
+    height: 26.7em; }
+  #panel-chart .chart.bar .y.percent__90 .detail-link {
+    height: 27em; }
+  #panel-chart .chart.bar .y.percent__91 .detail-link {
+    height: 27.3em; }
+  #panel-chart .chart.bar .y.percent__92 .detail-link {
+    height: 27.6em; }
+  #panel-chart .chart.bar .y.percent__93 .detail-link {
+    height: 27.9em; }
+  #panel-chart .chart.bar .y.percent__94 .detail-link {
+    height: 28.2em; }
+  #panel-chart .chart.bar .y.percent__95 .detail-link {
+    height: 28.5em; }
+  #panel-chart .chart.bar .y.percent__96 .detail-link {
+    height: 28.8em; }
+  #panel-chart .chart.bar .y.percent__97 .detail-link {
+    height: 29.1em; }
+  #panel-chart .chart.bar .y.percent__98 .detail-link {
+    height: 29.4em; }
+  #panel-chart .chart.bar .y.percent__99 .detail-link {
+    height: 29.7em; }
+  #panel-chart .chart.bar .y.percent__100 .detail-link {
+    height: 30em; }
+  #panel-chart .chart.bar .no-data .detail-link {
+    height: 1px; }
+  #panel-chart .chart.bar.x__apps .no-data {
+    display: none; }
+  #panel-chart .chart.bar.x__apps .point .x {
+    border: none;
+    display: table-cell !important;
+    font-size: 0.833em;
+    line-height: 1em;
+    padding: 0.9em 0;
+    position: relative;
+    vertical-align: top; }

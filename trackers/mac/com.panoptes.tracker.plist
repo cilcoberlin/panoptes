@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<<<<<<< HEAD
+	<key>StandardErrorPath</key>
+	<string>/Library/Logs/Panoptes/stderr.log</string>
+	<key>Label</key>
+	<string>com.panoptes.tracker</string>
+	<key>StandardOutPath</key>
+	<string>/Library/Logs/Panoptes/stdout.log</string>
+=======
+	<key>Label</key>
+	<string>com.panoptes.tracker</string>
+>>>>>>> 9407bf549c7a6a108e319627196c557ee520210e
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Library/Application Support/Panoptes/panoptes.py</string>
+		<string>--url={{URL}}</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>LimitLoadToSessionType</key>
+	<string>Aqua</string>
+</dict>
+</plist>

@@ -1,0 +1,42 @@
+
+{% load i18n %}
+	
+{% if start_date or end_date %}
+
+	<p class="dates filter">
+
+		{{ start_date|date }}
+		{% ifnotequal start_date end_date %}
+			{% if start_date and end_date %}&ndash;{% endif %}
+			{{ end_date|date }}
+		{% endifnotequal %}
+	
+	</p>
+
+{% endif %}
+
+{% if start_time or end_time %}
+
+	<p class="times filter">
+
+		{{ start_time|time }}
+		{% ifnotequal start_time end_time %}
+			{% if start_time and end_time %}&ndash;{% endif %}
+			{{ end_time|time }}
+		{% endifnotequal %}
+	
+	</p>
+
+{% endif %}
+
+{% if weekdays %}
+
+	<ul class="weekdays filter">
+	
+		{% for weekday in weekdays %}
+			<li class="weekday">{{ weekday }}</li>
+		{% endfor %}
+	
+	</ul>
+			
+{% endif %}

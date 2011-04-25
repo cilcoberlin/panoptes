@@ -1,0 +1,12 @@
+
+<div id="panel-{{ panel.slug }}" class="panel panel__{{ panel.slug }} {{ panel.is_primary|yesno:"primary,secondary" }}">
+
+	<h2 class="title">{% block title %}{% endblock %}</h2>
+	<h3 class="subtitle">{% block subtitle %}{% endblock %}</h3>
+	<div class="meta">{% block meta %}{% endblock %}</div>
+
+	<div class="content">
+		{% block content %}{% endblock %}
+	</div>
+
+</div>

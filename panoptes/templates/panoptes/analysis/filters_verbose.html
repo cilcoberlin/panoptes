@@ -1,0 +1,40 @@
+
+{% load i18n %}
+
+<span class="axes">
+	{% blocktrans with x_axis as x and y_axis|capfirst as y %}
+		{{ y }} per {{ x }}
+	{% endblocktrans %}
+</span>
+	
+{% if start_date or end_date %}
+
+	<span class="dates filter">
+
+		{{ start_date|date }}
+		{% if start_date and end_date %}&ndash;{% endif %}
+		{{ end_date|date }}
+	
+	</span>
+
+{% endif %}
+
+{% if start_time or end_time %}
+
+	<span class="times filter">
+
+		{{ start_time|time }}
+		{% if start_time and end_time %}&ndash;{% endif %}
+		{{ end_time|time }}
+	
+	</span>
+
+{% endif %}
+
+{% if weekdays %}
+
+	<span class="weekdays filter">
+		{{ weekdays|join:", " }}	
+	</span>
+			
+{% endif %}

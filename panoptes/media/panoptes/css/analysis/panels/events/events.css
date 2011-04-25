@@ -1,0 +1,35 @@
+#panel-events #no-events {
+  line-height: 1.5em; }
+#panel-events .event-list {
+  border-collapse: separate;
+  margin: 0 0 1.5em;
+  width: 100%; }
+  #panel-events .event-list thead th {
+    background: #eeeeee;
+    border: 1px solid #cccccc;
+    border-left: none;
+    border-right: none;
+    color: #005577;
+    line-height: 3em;
+    text-shadow: 1px 1px 1px white; }
+  #panel-events .event-list th, #panel-events .event-list td {
+    padding: 0 0.75em;
+    line-height: 1.5em; }
+  #panel-events .event-list caption {
+    font-size: 1.167em;
+    font-weight: bold;
+    line-height: 1.286em;
+    margin-bottom: 1.286em;
+    text-align: left; }
+  #panel-events .event-list .events .event td {
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 0.75em;
+    padding-top: 0.75em; }
+  #panel-events .event-list .events .event .name {
+    font-weight: bold; }
+  #panel-events .event-list .events .event .bounds {
+    color: #777777;
+    font-size: 0.833em;
+    line-height: 1.8em; }
+  #panel-events .event-list .events .event:first-child td {
+    border-top: 1px solid #eeeeee; }

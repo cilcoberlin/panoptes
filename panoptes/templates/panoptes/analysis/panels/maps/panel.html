@@ -1,0 +1,20 @@
+{% extends "panoptes/analysis/panel.html" %}
+
+{% load i18n %}
+{% load panoptes_analysis %}
+
+{% block title %}{% trans "Layout" %}{% endblock %}
+
+{% block subtitle %}
+	{% blocktrans with filters.y_axis.name|capfirst as y %}
+		{{ y }} per workstation
+	{% endblocktrans %}
+{% endblock %}
+
+{% block meta %}
+	{% simple_filters filters %}
+{% endblock %}
+
+{% block content %}
+	{{ map }}
+{% endblock %}

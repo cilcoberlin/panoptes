@@ -1,0 +1,9 @@
+
+{% if field.errors %}
+	{{ field.errors }}
+{% endif %}
+
+<div id="form-field-{{ field.html_name }}" class="form-field">
+	<label for="id_{{ field.html_name }}{% if is_multi %}_0{% endif %}">{{ field.label|title }}</label>
+	{{ field }}
+</div>

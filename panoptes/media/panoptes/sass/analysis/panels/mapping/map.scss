@@ -1,0 +1,46 @@
+
+@import "../../settings";
+@import "../../../core/mixins";
+
+#panel-map {
+	
+	.cell {
+		padding: 1.5em 0;
+		text-align: center;
+	}
+	.cell.spacer {
+		width: 1%;
+	}
+	.cell .name {
+		font-weight: bold;
+		line-height: 1.5em;
+	}
+	
+	.overlay {
+		background: $page-bg-color;
+		border: 1px solid $data-border-color;
+		color: $page-text-color;
+		display: inline-block;
+		line-height: 1.5em;
+		padding: 0 0.75em;
+		@include rounded("all", 0.75em);
+	}
+	
+	//  Overlay any cells with data with a color whose intensity corresponds to 
+	//  the value of the intensity specified in a class attribute
+	@for $i from 0 through 100 {
+		.cell.intensity__#{$i} { background-color: mix($data-max-color, $data-min-color, $i * 1%); }
+	}	
+	.workstation {
+		background: $data-bg-null-color; 
+	}
+	.workstation.has-data {
+		color: $data-text-color;
+	}
+	.workstation.no-data {
+		.name {
+			padding: 0 0.75em;
+		}
+	}
+
+}

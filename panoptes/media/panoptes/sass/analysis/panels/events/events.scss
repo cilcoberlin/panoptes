@@ -1,0 +1,67 @@
+
+@import "../../settings";
+@import "../../../core/mixins";
+
+#panel-events {
+
+	#no-events {
+		line-height: 1.5em;
+	}
+	
+	//  A table containing a list of events for a location
+	.event-list {
+		border-collapse: separate;
+		margin: 0 0 1.5em;
+		width: 100%;
+		
+		thead {
+			th {
+				background: $table-header-bg-color;
+				border: 1px solid $border-color;
+				border-left: none;
+				border-right: none;
+				color: $table-header-text-color;
+				line-height: 3em;
+				@include sharp-text-shadow($page-bg-color);
+			}
+		}
+			
+		th, td {
+			padding: 0 0.75em;
+			line-height: 1.5em;
+		}
+		
+		caption {
+			font-size: 1.167em;
+			font-weight: bold;
+			line-height: 1.286em;
+			margin-bottom: 1.286em;
+			text-align: left;
+		}
+		
+		.events {
+			.event {
+				td {
+					border-bottom: 1px solid $border-color;
+					padding-bottom: 0.75em;
+					padding-top: 0.75em;
+				}
+				.name {
+					font-weight: bold;
+				}
+				.days {
+					
+				}
+				.bounds {
+					color: $soft-text-color;
+					font-size: 0.833em;
+					line-height: 1.8em;
+				}
+			}
+			.event:first-child td {
+				border-top: 1px solid $table-header-bg-color;
+			}
+		}
+	}	
+
+}

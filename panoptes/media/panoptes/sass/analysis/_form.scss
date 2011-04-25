@@ -1,0 +1,141 @@
+
+@import "settings";
+@import "../core/mixins";
+
+#data-filters {
+	clear: left;
+	float: left;
+	line-height: 1.5em;
+	margin-left: -#{$sidebar-width};
+	width: $sidebar-width;
+		
+	//  Form field errors
+	.errorlist {
+		color: $error-text-color;
+		font-weight: bold;
+	}
+	
+	//  Group core and date range fieldsets with highlighted borders
+	fieldset {
+		margin-right: $content-padding;
+		padding: 0 $sidebar-padding;
+		
+		&.core,
+		&.weekdays,
+		&.times {
+			border-bottom: 1px solid $border-color;
+		}
+		&.dates,
+		&.weekdays,
+		&.submit-buttons {
+			border-top: 1px solid $page-bg-color;
+			padding-top: 1.5em;
+		}
+		&.hidden {
+			display: none;
+		}
+	}
+	
+	//  Labels and form field wrappers
+	label {
+		color: $form-text-color;
+		font-weight: bold;
+		@include sharp-text-shadow($page-bg-color);
+		text-transform: uppercase;
+	}
+	.form-field {
+		margin-bottom: 1.5em;
+		
+		input, select {
+			font-size: 1em;
+			line-height: 1.5em;
+			@include sans-serif;			
+		}
+	}
+		
+	//  Set input widths to match their data types
+	.core select {
+		max-width: 14em;
+	}		
+	.dates input {
+		width: 5.5em;
+	}
+	.times input {
+		width: 5em;
+	}
+	
+	//  Align all form field labels
+	.core,
+	.dates,
+	.times {
+		label {
+			display: inline-block;
+			width: 7em;
+		}
+	}
+	
+	//  Weekday selection rendered as a list of checkboxes with labels
+	.weekdays {
+		clear: both;
+		padding-bottom: 1.5em;
+		
+		label {
+			float: left;
+			width: 7em;
+		}
+		
+		ul {
+			margin-left: 7em;
+			
+			li {
+				float: left;
+				margin-right: 1em;
+				text-align: center;
+				
+				label {
+					color: $page-text-color;
+					float: none;
+					font-weight: normal;
+					text-shadow: none;
+				}
+				input {
+					display: block;
+					margin: 0 0.1em 0 0;	
+				}
+			}
+			li:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+	
+	//  Fancy submit button
+	fieldset.submit-buttons {
+		clear: both;
+		
+		input {
+			background: $button-bg-color;
+			border: 1px solid $button-border-color;
+			border-top-color: $button-accent-border-color;
+			border-left-color: $button-accent-border-color;
+			color: $form-text-color; 
+			cursor: pointer;
+			font-size: 1em;
+			font-weight: bold;
+			line-height: 1.5em;
+			padding: 0.375em 1.5em;
+			@include rounded("all", 1.5em);
+			@include sans-serif;
+		}
+	}
+}
+
+//  Override jQuery timepicker styles 
+div.time-picker {
+	width: 5em;
+}
+
+//  Override jQuery UI datepicker styles
+#ui-datepicker-div {
+	font-size: 0.833em;
+}

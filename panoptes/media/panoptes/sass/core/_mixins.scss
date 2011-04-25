@@ -1,0 +1,95 @@
+
+@mixin sharp-text-shadow($color) {
+	text-shadow: 1px 1px 1px $color;
+}
+
+@mixin rotate($degrees) {
+	
+	$rotate: #{$degrees}deg;
+	$ie: 0;
+	@if $degrees == 90 {
+		$ie: 1; 
+	} @else if $degrees == 180 {
+		$ie: 2;
+	} @else if $degrees == 270 {
+		$ie: 3;
+	}
+	
+	-moz-transform:rotate($rotate);
+	-webkit-transform:rotate($rotate);
+	-o-transform:rotate($rotate);
+	-ms-transform:rotate($rotate);
+	
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=$ie);
+
+}
+
+@mixin box-shadow($color, $offsetX: 0, $offsetY: 0, $blur: 5px, $spread: 0) {
+	-moz-box-shadow: $offsetX $offsetY $blur $spread $color;
+	-webkit-box-shadow: $offsetX $offsetY $blur $spread $color;
+	box-shadow: $offsetX $offsetY $blur $spread $color;
+}
+
+@mixin opacity($alpha) {
+	-moz-opacity: $alpha;
+	-webkit-opacity: $alpha;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=$alpha * 100)";
+	filter: alpha(opacity=$alpha * 100);
+	opacity: $alpha;
+}
+
+@mixin sans-serif {
+	font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+@mixin rounded($side, $radius: 10px) {
+	@if $side == all {
+		-moz-border-radius: $radius;
+		-webkit-border-radius: $radius;
+		border-radius: $radius;
+	} @else if $side == bottom {
+		-moz-border-radius-bottomleft: $radius;
+		-moz-border-radius-bottomright: $radius;
+		-webkit-border-bottom-left-radius: $radius;
+		-webkit-border-bottom-right-radius: $radius;
+		border-bottom-left-radius: $radius;
+		border-bottom-right-radius: $radius;
+	} @else if $side == top {
+		-moz-border-radius-topleft: $radius;
+		-moz-border-radius-topright: $radius;
+		-webkit-border-top-left-radius: $radius;
+		-webkit-border-top-right-radius: $radius;
+		border-top-left-radius: $radius;
+		border-top-right-radius: $radius;
+	} @else if $side == left {
+		-moz-border-radius-topleft: $radius;
+		-moz-border-radius-bottomleft: $radius;
+		-webkit-border-top-left-radius: $radius;
+		-webkit-border-bottom-left-radius: $radius;
+		border-top-left-radius: $radius;
+		border-bottom-left-radius: $radius;
+	} @else if $side == right {
+		-moz-border-radius-topright: $radius;
+		-moz-border-radius-bottomright: $radius;
+		-webkit-border-top-right-radius: $radius;
+		-webkit-border-bottom-right-radius: $radius;
+		border-top-right-radius: $radius;
+		border-bottom-right-radius: $radius;
+	} @else if $side == top-left {
+		-moz-border-radius-topleft: $radius;
+		-webkit-border-top-left-radius: $radius;
+		border-top-left-radius: $radius;
+	} @else if $side == top-right {
+		-moz-border-radius-topright: $radius;
+		-webkit-border-top-right-radius: $radius;
+		border-top-right-radius: $radius;
+	} @else if $side == bottom-left {
+		-moz-border-radius-bottomleft: $radius;
+		-webkit-border-bottom-left-radius: $radius;
+		border-bottom-left-radius: $radius;
+	} @else if $side == bottom-right {
+		-moz-border-radius-bottomright: $radius;
+		-webkit-border-bottom-right-radius: $radius;
+		border-bottom-right-radius: $radius;
+	}
+}

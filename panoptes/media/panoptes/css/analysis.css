@@ -1,0 +1,266 @@
+body {
+  background: #eeeeee url("../images/body-bg.jpg") repeat-y 25em 0;
+  color: #333333;
+  font-size: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif; }
+
+html > body {
+  font-size: 12px; }
+
+a {
+  color: #005577;
+  text-decoration: none; }
+
+a:visited {
+  color: #005577; }
+
+a:hover {
+  color: #337799; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal; }
+
+table thead th {
+  text-align: left; }
+
+#header {
+  background: #333333;
+  border-bottom: 1px solid #999999;
+  -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  color: white;
+  height: 3em;
+  padding: 1.5em 0;
+  text-shadow: 1px 1px 1px black; }
+  #header #title {
+    background: url("../images/analytics-icon.png") no-repeat right 0.65em;
+    color: #ffffcc;
+    float: left;
+    font-size: 1.167em;
+    line-height: 2.572em;
+    padding-left: 1.285em;
+    padding-right: 25px;
+    text-transform: uppercase; }
+    #header #title .location {
+      color: white;
+      font-weight: bold; }
+  #header #subtitle {
+    font-size: 2em;
+    line-height: 1.5em;
+    margin-left: 14em; }
+    #header #subtitle .axes, #header #subtitle .filter {
+      display: block;
+      float: left; }
+    #header #subtitle .filter {
+      border: 1px solid #666666;
+      color: #ffffcc;
+      font-size: 0.5em;
+      line-height: 1.5em;
+      margin: 0.75em 0 0.75em 3em;
+      padding: 0 1em;
+      -moz-border-radius: 1.5em;
+      -webkit-border-radius: 1.5em;
+      border-radius: 1.5em; }
+
+#content {
+  padding-top: 1.5em;
+  margin-left: 28em;
+  clear: both; }
+
+#footer {
+  background: #333333;
+  border-top: 1px solid #cccccc;
+  clear: both;
+  color: white;
+  padding: 1.5em 0;
+  width: 25em; }
+  #footer p {
+    line-height: 1.5em;
+    padding-left: 1.5em; }
+    #footer p a {
+      color: #ffffcc; }
+
+#ajax-loading {
+  position: fixed;
+  height: 100%;
+  width: 100%; }
+  #ajax-loading .overlay {
+    background: black;
+    -moz-opacity: 0.5;
+    -webkit-opacity: 0.5;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=$alpha * 100)";
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 9000; }
+  #ajax-loading .loading {
+    background: white;
+    border: 3px double #010101;
+    -moz-box-shadow: 0 5px 10px 0 black;
+    -webkit-box-shadow: 0 5px 10px 0 black;
+    box-shadow: 0 5px 10px 0 black;
+    margin: 0 auto;
+    padding: 1.5em;
+    position: relative;
+    -moz-border-radius: 18px;
+    -webkit-border-radius: 18px;
+    border-radius: 18px;
+    text-align: center;
+    top: 50%;
+    width: 10em;
+    z-index: 9001; }
+    #ajax-loading .loading .message {
+      background: url("../images/loading.gif") no-repeat top center;
+      color: #004444;
+      margin-top: 0.5em;
+      padding-top: 2em; }
+
+#data-filters {
+  clear: left;
+  float: left;
+  line-height: 1.5em;
+  margin-left: -28em;
+  width: 28em; }
+  #data-filters .errorlist {
+    color: #aa0000;
+    font-weight: bold; }
+  #data-filters fieldset {
+    margin-right: 3em;
+    padding: 0 1.5em; }
+    #data-filters fieldset.core, #data-filters fieldset.weekdays, #data-filters fieldset.times {
+      border-bottom: 1px solid #cccccc; }
+    #data-filters fieldset.dates, #data-filters fieldset.weekdays, #data-filters fieldset.submit-buttons {
+      border-top: 1px solid white;
+      padding-top: 1.5em; }
+    #data-filters fieldset.hidden {
+      display: none; }
+  #data-filters label {
+    color: #005577;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px white;
+    text-transform: uppercase; }
+  #data-filters .form-field {
+    margin-bottom: 1.5em; }
+    #data-filters .form-field input, #data-filters .form-field select {
+      font-size: 1em;
+      line-height: 1.5em;
+      font-family: "Helvetica Neue", Arial, sans-serif; }
+  #data-filters .core select {
+    max-width: 14em; }
+  #data-filters .dates input {
+    width: 5.5em; }
+  #data-filters .times input {
+    width: 5em; }
+  #data-filters .core label,
+  #data-filters .dates label,
+  #data-filters .times label {
+    display: inline-block;
+    width: 7em; }
+  #data-filters .weekdays {
+    clear: both;
+    padding-bottom: 1.5em; }
+    #data-filters .weekdays label {
+      float: left;
+      width: 7em; }
+    #data-filters .weekdays ul {
+      margin-left: 7em; }
+      #data-filters .weekdays ul li {
+        float: left;
+        margin-right: 1em;
+        text-align: center; }
+        #data-filters .weekdays ul li label {
+          color: #333333;
+          float: none;
+          font-weight: normal;
+          text-shadow: none; }
+        #data-filters .weekdays ul li input {
+          display: block;
+          margin: 0 0.1em 0 0; }
+      #data-filters .weekdays ul li:last-child {
+        margin-right: 0; }
+  #data-filters fieldset.submit-buttons {
+    clear: both; }
+    #data-filters fieldset.submit-buttons input {
+      background: white;
+      border: 1px solid #888888;
+      border-top-color: #bbbbbb;
+      border-left-color: #bbbbbb;
+      color: #005577;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      line-height: 1.5em;
+      padding: 0.375em 1.5em;
+      -moz-border-radius: 1.5em;
+      -webkit-border-radius: 1.5em;
+      border-radius: 1.5em;
+      font-family: "Helvetica Neue", Arial, sans-serif; }
+
+div.time-picker {
+  width: 5em; }
+
+#ui-datepicker-div {
+  font-size: 0.833em; }
+
+#panels {
+  float: left;
+  width: 100%; }
+  #panels .panel {
+    margin-bottom: 4.5em;
+    position: relative; }
+    #panels .panel .title,
+    #panels .panel .subtitle {
+      text-transform: uppercase; }
+    #panels .panel .title {
+      color: #ee9900;
+      font-size: 1.5em;
+      font-weight: bold;
+      line-height: 1em;
+      margin-right: 1em; }
+    #panels .panel .subtitle {
+      color: #005577;
+      font-size: 1.167em;
+      line-height: 2.572em;
+      margin-bottom: 1.286em; }
+    #panels .panel .meta {
+      font-weight: bold; }
+      #panels .panel .meta .filter {
+        background-repeat: no-repeat;
+        background-position: left center;
+        display: inline-block;
+        line-height: 1.5em;
+        padding-left: 20px; }
+        #panels .panel .meta .filter.dates {
+          background-image: url("../images/icons/calendar.png"); }
+        #panels .panel .meta .filter.times {
+          background-image: url("../images/icons/clock.png"); }
+      #panels .panel .meta .weekdays .weekday {
+        display: inline;
+        margin-right: 0.375em; }
+    #panels .panel.primary .meta {
+      position: absolute;
+      right: 0;
+      top: 0; }
+      #panels .panel.primary .meta .filter {
+        margin-left: 1.5em; }
+    #panels .panel.secondary .subtitle {
+      line-height: 1em;
+      position: absolute;
+      right: 0;
+      top: 0; }
+    #panels .panel.secondary .meta {
+      padding: 0.75em 0; }
+      #panels .panel.secondary .meta .filter {
+        margin-right: 1.5em; }
+    #panels .panel .content {
+      margin-top: 1.5em;
+      position: relative; }
+  #panels .panel.primary {
+    width: 95%; }
+  #panels .panel.secondary {
+    float: left;
+    margin-right: 5%;
+    width: 45%; }

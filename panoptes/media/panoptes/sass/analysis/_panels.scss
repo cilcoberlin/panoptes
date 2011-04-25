@@ -1,0 +1,108 @@
+
+@import "settings";
+@import "../core/mixins";
+
+#panels {
+	
+	float: left;
+	width: 100%;
+	
+	.panel {
+		margin-bottom: 4.5em;
+		position: relative;
+		
+		.title,
+		.subtitle {
+			text-transform: uppercase;
+		}
+		
+		.title {
+			color: $panel-title-color;
+			font-size: 1.5em;
+			font-weight: bold;
+			line-height: 1em;
+			margin-right: 1em;
+		}
+		.subtitle {
+			color: $panel-subtitle-color;
+			font-size: 1.167em;
+			line-height: 1.286em * 2;
+			margin-bottom: 1.286em;
+		}
+		
+		.meta {
+			font-weight: bold;
+				
+			.filter {
+				background-repeat: no-repeat;
+				background-position: left center;
+				display: inline-block;
+				line-height: 1.5em;
+				padding-left: 20px;
+				
+				&.dates {
+					background-image: url("../images/icons/calendar.png");
+				}
+				&.times {
+					background-image: url("../images/icons/clock.png");
+				}
+			}	
+			.weekdays {
+				.weekday {
+					display: inline;
+					margin-right: 0.375em;
+				}
+			}
+		}
+		
+		//  Show the date metadata to the right of the primary panel
+		&.primary {
+			.meta {
+				position: absolute;
+				right: 0;
+				top: 0;
+				
+				.filter {
+					margin-left: 1.5em;
+				}
+			}
+		}
+		
+		//  Show the date metadata below the secondary panels' titles
+		&.secondary {
+			.subtitle {
+				line-height: 1em;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+			.meta {
+				padding: 0.75em 0;
+				
+				.filter {
+					margin-right: 1.5em;
+				}
+			}
+		}
+		
+		.content {
+			margin-top: 1.5em;
+			position: relative;
+		}
+	}
+	
+	//  Have the primary panel occupy all available horizontal space, and 
+	//  stagger the secondary panels two-wide across the rest
+	$panel-gutter: 5%;
+	.panel.primary {
+		width: 100% - $panel-gutter;
+	}
+	.panel.secondary {
+		float: left;
+		margin-right: $panel-gutter;
+		width: 45%;
+	}
+ 	
+}
+
+
