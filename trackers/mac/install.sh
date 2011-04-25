@@ -2,7 +2,7 @@
 
 app_plist='com.panoptes.tracker.plist'
 app_dir=/Library/Application\ Support/Panoptes
-logs_dir=/Library/Logs/Panpotes
+logs_dir=/Library/Logs/Panoptes
 la_dir=/Library/LaunchAgents
 
 #  Get the panoptes URL from the user
