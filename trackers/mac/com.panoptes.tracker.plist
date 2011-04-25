@@ -6,6 +6,7 @@
 	<string>com.panoptes.tracker</string>
 	<key>ProgramArguments</key>
 	<array>
+		<string>/usr/bin/python</string>
 		<string>/Library/Application Support/Panoptes/panoptes.py</string>
 		<string>--url={{URL}}</string>
 	</array>
