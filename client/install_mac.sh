@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-app_plist='com.panoptes.tracker.plist'
-app_dir=/Library/Application\ Support/Panoptes
-la_dir=/Library/LaunchAgents
+APP_PLIST='com.panoptes.tracker.plist'
+APP_DIR=/Library/Application\ Support/Panoptes
+DATA_DIR=mac_data
+LA_DIR=/Library/LaunchAgents
+TRACKER_DIR=tracker
 
 #  Get the panoptes URL from the user
 echo
@@ -12,23 +14,23 @@ echo
 
 #  Copy over application files
 echo "Copying files..."
-[ ! -d "${app_dir}" ] && mkdir "${app_dir}"
-cp -f panoptes.py "${app_dir}/"
+[ ! -d "${APP_DIR}" ] && mkdir "${APP_DIR}"
+cp -f $TRACKER_DIR/panoptes.py "${APP_DIR}/"
 echo "  All files have been copied"
 echo 
 
 #  Update the launch agent to pass Panoptes the URL provided to this installer
 echo "Configuring launch agent..."
-launchctl unload $app_plist > /dev/null 2>&1
-cp -f $app_plist $la_dir
-cd $la_dir
-chmod 644 $app_plist
-sed -i '' -e 's#{{URL}}#'"$panoptes_url"'#' $app_plist
+launchctl unload $APP_PLIST > /dev/null 2>&1
+cp -f $DATA_DIR/$APP_PLIST $LA_DIR
+cd $LA_DIR
+chmod 644 $APP_PLIST
+sed -i '' -e 's#{{URL}}#'"$panoptes_url"'#' $APP_PLIST
 echo "  Launch agent configured"
 echo
 
 #  Run Panoptes
 echo "Loading Panoptes..."
-launchctl load $app_plist > /dev/null 2>&1
+launchctl load $APP_PLIST > /dev/null 2>&1
 echo "  Panoptes loaded"
 echo
