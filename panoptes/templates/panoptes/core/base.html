@@ -5,9 +5,13 @@
 	<meta http-equiv="Content-Language" content="en-us" /> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<link type="text/css" rel="stylesheet" media="all" href="{{ MEDIA_URL }}panoptes/css/core.css" />	
+	{% block all_css %}
 
-	{% block css %}{% endblock %}
+		<link type="text/css" rel="stylesheet" media="all" href="{{ MEDIA_URL }}panoptes/css/core.css" />	
+	
+		{% block css %}{% endblock %}
+
+	{% endblock %}
 	
 	<title>{% block title %}{% endblock %} | Panoptes</title>
 
@@ -16,10 +20,14 @@
 
 	{% block body %}{% endblock %}
 
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-	<script type="text/javascript" src="{{ MEDIA_URL }}panoptes/js/core/init.js"></script>
+	{% block all_javascript %}
 
-	{% block javascript %}{% endblock %}
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}panoptes/js/core/init.js"></script>
+	
+		{% block javascript %}{% endblock %}
+
+	{% endblock %}
 
 </body>
 </html>

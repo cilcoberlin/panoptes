@@ -1,0 +1,11 @@
+
+@import "mixins";
+
+body {
+	font-size: 100%;
+	@include sans-serif;
+}
+
+html>body {
+	font-size: 12px;
+}

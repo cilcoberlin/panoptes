@@ -5,12 +5,6 @@
 body {
 	background: $sidebar-bg-color url("../images/body-bg.jpg") repeat-y ($sidebar-width - $content-padding) 0;
 	color: $page-text-color;	
-	font-size: 100%;
-	@include sans-serif;
-}
-
-html>body {
-	font-size: 12px;
 }
 
 a {

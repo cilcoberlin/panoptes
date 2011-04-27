@@ -40,3 +40,10 @@ del {
 table {
   border-collapse: collapse;
   border-spacing: 0; }
+
+body {
+  font-size: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif; }
+
+html > body {
+  font-size: 12px; }
