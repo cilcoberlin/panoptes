@@ -292,7 +292,7 @@ class SessionManager(models.Manager):
 		Arguments:
 		
 		workstation -- a Workstation instance
-		apps_used -- a string of apps used
+		apps_used -- a list of apps used
 		time_offset -- an integer of the number of seconds to add to the end time
 		
 		Returns: a Session instance on success or None on failure
