@@ -1,0 +1,18 @@
+.panoptes.login #content,
+.paonptes.logout #content {
+  margin: 0 auto;
+  width: 25em; }
+  .panoptes.login #content #title,
+  .paonptes.logout #content #title {
+    font-size: 1.5em;
+    line-height: 1em;
+    margin: 1em 0; }
+
+.panoptes.login #login-form fieldset {
+  margin: 1.5em 0; }
+.panoptes.login #login-form fieldset.data-entry .form-field {
+  font-size: 1.167em;
+  line-height: 1.286em;
+  margin: 0.643em 0; }
+  .panoptes.login #login-form fieldset.data-entry .form-field input {
+    font-family: "Helvetica Neue", Arial, sans-serif; }

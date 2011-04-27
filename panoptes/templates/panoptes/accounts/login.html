@@ -1,0 +1,44 @@
+{% extends "panoptes/accounts/log_base.html" %}
+
+{% load i18n %}
+{% load panoptes_core %}
+
+{% block title %}{% trans "Login" %}{% endblock %}
+{% block page_title %}{% trans "Panoptes Login" %}{% endblock %}
+
+{% block body_classes %}{{ block.super }} login{% endblock %}
+
+{% block content %}
+
+    <form id="login-form" method="post" action="{% url django.contrib.auth.views.login %}">
+
+        {% if form.errors %}
+	        <fieldset class="errors">
+	            <p>{% trans "Invalid user name or password. Please try again." %}</p>
+	        </fieldset>
+        {% endif %}
+
+        <fieldset class="data-entry">
+			{% form_field form.username %}
+			{% form_field form.password %}
+        </fieldset>
+
+        <fieldset class="buttons">
+            <input type="submit" value="{% trans "Log in to Panoptes" %}" />
+            <input type="hidden" name="next" value="{{ next }}" />
+			{% csrf_token %}
+        </fieldset>
+    </form>
+
+{% endblock %}
+
+{% block all_javascript %}
+
+    <script type="text/javascript">
+        var userName = document.getElementById("id_username");
+        if (userName) {
+            userName.focus();
+        }
+    </script>
+
+{% endblock %}

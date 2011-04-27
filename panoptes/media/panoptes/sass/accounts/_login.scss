@@ -1,0 +1,42 @@
+
+@import "settings";
+@import "../core/mixins";
+
+.panoptes.login,
+.paonptes.logout {
+
+	#content {
+		margin: 0 auto;
+		width: $login-content-width;
+		
+		#title {
+			font-size: 1.5em;
+			line-height: 1em;
+			margin: 1em 0;
+		}
+	}
+
+}
+
+.panoptes.login {
+	
+	#login-form {
+		
+		fieldset {
+			margin: 1.5em 0;
+		}
+		
+		fieldset.data-entry {
+			.form-field {
+				font-size: 1.167em;
+				line-height: 1.286em;
+				margin: (1.286em / 2) 0;
+				
+				input {
+					@include sans-serif;
+				}
+			}
+		}
+	}
+
+}
