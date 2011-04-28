@@ -42,11 +42,11 @@ class SessionFilterForm(DjangoForm):
 			
 		#  If an end date is provided and no start date is given, start at the first
 		#  date on which sessions were recorded, or a year ago, if no sessions exist
-		if cleaned_data['end'] and not cleaned_data.get('start', None):
+		if cleaned_data.get('end', None) and not cleaned_data.get('start', None):
 			cleaned_data['start'] = Session.objects.first_session_date_for_location(cleaned_data['location'])
 		
 		#  If the date bounds are left blank, default to viewing the past week
-		if not cleaned_data['start'] and not cleaned_data['end']:
+		if not cleaned_data.get('start', None) and not cleaned_data.get('end', None):
 			cleaned_data['start'] = today - datetime.timedelta(weeks=1)
 			cleaned_data['end'] = today
 		
