@@ -57,6 +57,22 @@ table thead th {
       -moz-border-radius: 1.5em;
       -webkit-border-radius: 1.5em;
       border-radius: 1.5em; }
+  #header #account-info {
+    float: right;
+    line-height: 1.5em;
+    margin: 0.75em 3em;
+    text-shadow: 1px 1px 1px black; }
+    #header #account-info a {
+      color: white; }
+    #header #account-info a:hover {
+      color: #ffffcc; }
+    #header #account-info .info {
+      float: left;
+      margin-right: 1.5em; }
+      #header #account-info .info.name {
+        color: #ffffcc;
+        font-weight: bold;
+        margin-right: 3em; }
 
 #content {
   padding-top: 1.5em;
@@ -118,6 +134,7 @@ table thead th {
   float: left;
   line-height: 1.5em;
   margin-left: -28em;
+  margin-bottom: 6em;
   width: 28em; }
   #data-filters .errorlist {
     color: #aa0000;

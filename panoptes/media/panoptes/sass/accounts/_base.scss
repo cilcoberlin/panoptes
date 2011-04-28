@@ -1,0 +1,17 @@
+
+@import "settings";
+
+.accounts {
+
+	a {
+		color: $link-color;
+		text-decoration: none;
+	}
+	a:visited {
+		color: $link-visited-color;
+	}
+	a:hover {
+		color: $link-hover-color;
+	}
+
+}

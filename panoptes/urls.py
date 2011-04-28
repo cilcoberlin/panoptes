@@ -14,14 +14,9 @@ api_patterns = patterns('',
 	(r'^versions/', include(api_version_patterns))
 )
 
-account_patterns = patterns('django.contrib.auth.views',
-	url(r'login/$', 'login', {'template_name': 'panoptes/accounts/login.html'}, 'login'),
-	url(r'logout/$', 'logout', {'template_name': 'panoptes/accounts/logout.html'}, 'logout')
-)
-
 urlpatterns = patterns('',
 
-	(r'^accounts/', include(account_patterns)),
+	(r'^accounts/', include('panoptes.accounts.urls')),
 	(r'^analysis/', include('panoptes.analysis.urls')),
 	(r'^api/', include(api_patterns)),
 	

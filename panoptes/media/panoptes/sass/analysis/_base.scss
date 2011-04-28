@@ -76,6 +76,31 @@ table {
 			@include rounded("all", 1.5em);
 		}
 	}
+	
+	#account-info {
+		float: right;
+		line-height: 1.5em;
+		margin: 0.75em 3em;
+		@include sharp-text-shadow($header-text-shadow-color);
+		
+		a {
+			color: $header-text-color;
+		}
+		a:hover {
+			color: $title-text-color;
+		}
+		
+		.info {
+			float: left;
+			margin-right: 1.5em;
+			
+			&.name {
+				color: $title-text-color;
+				font-weight: bold;
+				margin-right: 3em;
+			}
+		}
+	}
 }
 
 #content {
@@ -102,7 +127,7 @@ table {
 	}
 }
 
-//  An global overlay displayed when loading data via Ajax
+//  A body-covering overlay that is displayed when loading data via Ajax
 #ajax-loading {
 
 	position: fixed;

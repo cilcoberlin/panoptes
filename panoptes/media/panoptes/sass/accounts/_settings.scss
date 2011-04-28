@@ -1,2 +1,37 @@
 
-$login-content-width: 25em;
+@import "../core/settings";
+
+//  Background colors
+$header-bg-color: $panoptes-header-bg-color;
+$error-bg-color: $panoptes-error-bg-color;
+$form-border-color: #aaa;
+$form-legend-bg-color: #555;
+$login-bg-color: #eee;
+$login-title-bg-color: $panoptes-header-bg-color;
+$login-form-bg-color: #fff;
+$login-form-border-color: $form-border-color;
+$login-form-error-bg-color: $panoptes-error-bg-color;
+$login-form-button-bg-color: #333;
+$login-form-button-border-color: #000;
+$login-form-button-border-accent-color: #888;
+$notification-bg-color: #ffc;
+
+//  Text colors
+$error-text-color: #a00;
+$header-text-color: $panoptes-header-text-color;
+$header-text-accent-color: $panoptes-header-text-accent-color;
+$header-text-shadow-color: $panoptes-header-text-shadow-color;
+$form-legend-text-color: #fff;
+$login-form-error-text-color: #a00;
+$login-title-text-color: $panoptes-header-text-accent-color;
+$login-title-text-shadow-color: #000;
+$login-form-button-text-color: #fff;
+$login-form-label-color: #444;
+
+//  Link colors
+$link-color: #077;
+$link-hover-color: #099;
+$link-visited-color: #077;
+
+//  Document sizing
+$login-content-width: 30em;

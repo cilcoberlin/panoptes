@@ -1,0 +1,86 @@
+
+@import "settings";
+@import "../core/mixins";
+
+.accounts.preferences {
+
+	#title,
+	#subtitle {
+		font-size: 1.5em;
+		line-height: 4em;
+		padding: 0 0.5em 0 1em;
+		@include sharp-text-shadow($header-text-shadow-color);
+	}
+
+	#title {
+		color: $header-text-accent-color;
+		float: left; 
+	}
+	
+	#subtitle {
+		background: $header-bg-color;
+		@include box-shadow(rgba(0, 0, 0, 0.2), 0, 0, 20px, 0);
+		color: $header-text-color;
+		font-weight: normal;
+		margin-bottom: 2em;
+	}
+	
+	#content {
+		padding: 0 1.5em;
+		
+		.notification {
+			background: $notification-bg-color;
+			line-height: 3em;
+			padding: 0 1.5em;
+			
+			a {
+				font-weight: bold;
+			}
+		}
+	}
+	
+	#prefs-form {
+		clear: both;
+		line-height: 1.5em;
+		
+		fieldset {
+			margin: 1.5em 0;
+			
+			legend {
+				background: $form-legend-bg-color;
+				color: $form-legend-text-color;
+				font-size: 1.167em;
+				line-height: 1.286em * 2;
+				padding: 0 1.286em;
+				text-transform: uppercase;
+				display: block;
+				width: 90%;
+			}
+			
+			input, select {
+				font-size: 1em;
+				@include sans-serif;
+			}
+			
+			.errorlist {
+				background: $error-bg-color;
+				color: $error-text-color;
+				display: inline-block;
+				margin: 0 1em;
+				padding: 0 0.5em;
+			}
+		}
+		
+		fieldset.analytics {
+			.form-field {
+				margin: 1.5em;
+				
+				label {
+					display: block;
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+}

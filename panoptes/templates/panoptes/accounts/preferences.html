@@ -1,0 +1,46 @@
+{% extends "panoptes/accounts/base.html" %}
+
+{% load i18n %}
+{% load panoptes_core %}
+
+{% block title %}{% trans "Account Preferences" %}{% endblock %}
+
+{% block body_classes %}{{ block.super }} preferences{% endblock %}
+
+{% block body %}
+
+	<h1 id="title">Panoptes</h1>
+	<h2 id="subtitle">{% trans "Account Preferences" %}</h2>
+
+	<div id="content">
+
+		{% if updated %}
+			<p class="notification">
+				{% trans "Your account preferences have been successfully updated." %}
+				<br />
+				<a href="{% url analysis-index %}">{% trans "Return to the analytics page" %}</a>
+			</p>
+		{% endif %}
+	
+		<form id="prefs-form" method="post" action="{% url account-preferences %}">
+		
+			<fieldset class="analytics">
+	
+				<legend>{% trans "Analytics Preferences" %}</legend>
+	
+				{% form_field form.default_location %}
+				{% form_field form.default_lens %}
+				{% form_field form.default_recent_days %}
+	
+			</fieldset>
+	
+			<fieldset class="button">
+				<input type="submit" value="{% trans "Update Options" %}" />
+				{% csrf_token %}
+			</fieldset>
+	
+		</form>
+
+	</div>
+
+{% endblock %}

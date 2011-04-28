@@ -36,6 +36,18 @@
 		</h1>
 		<h2 id="subtitle">{% if filters %}{% verbose_filters filters %}{% endif %}</h2>
 
+		{% if user.is_authenticated %}
+			<ul id="account-info">
+				<li class="info name">{{ user.get_full_name }}</li>
+				<li class="info prefs">
+					<a href="{% url account-preferences %}">{% trans "Preferences" %}</a>
+				</li>
+				<li class="info logout">
+					<a href="{% url logout %}">{% trans "Logout" %}</a>
+				</li>	
+			</ul>
+		{% endif %}
+
 	</div>
 
 	<div id="content">

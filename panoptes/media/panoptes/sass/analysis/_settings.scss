@@ -1,19 +1,21 @@
 
+@import "../core/settings";
+
 //  Background colors
-$page-bg-color: #fff;
-$header-bg-color: #333;
-$error-bg-color: #fcc;
+$page-bg-color: $panoptes-page-bg-color;
+$header-bg-color: $panoptes-header-bg-color;
+$error-bg-color: $panoptes-error-bg-color;
 $selected-bg-color: #057; 
 $sidebar-bg-color: #eee; 
 
 //  Text colors
-$page-text-color: #333;
-$header-text-color: #fff;
-$header-text-shadow-color: #000;
+$page-text-color: $panoptes-page-text-color;
+$header-text-color: $panoptes-header-text-color;
+$header-text-shadow-color: $panoptes-header-text-shadow-color;
 $error-text-color: #a00;
 $soft-text-color: #777;
 $selected-text-color: #fff;
-$title-text-color: #ffc;
+$title-text-color: $panoptes-header-text-accent-color;
 $panel-title-color: #e90;
 $panel-subtitle-color: #057;
 
