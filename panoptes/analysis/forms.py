@@ -1,5 +1,6 @@
 
 from django import forms
+from django.http import QueryDict
 from django.utils.translation import ugettext_lazy as _
 
 from cilcdjango.core.forms import DjangoForm
@@ -23,6 +24,28 @@ class SessionFilterForm(DjangoForm):
 	weekdays   = WeekdayChoiceField(label=_("weekdays"), required=False)
 	x_detail   = forms.CharField(label=_("x-value detail"), required=False, widget=forms.HiddenInput)
 	y_detail   = forms.CharField(label=_("y-value detail"), required=False, widget=forms.HiddenInput)
+
+	def __init__(self, *args, **kwargs):
+		"""Accept a 'profile' kwarg that provides default data."""
+		
+		profile = kwargs.pop('profile', None)
+		if profile:
+			today = datetime.date.today()
+			post = QueryDict("")
+			post = post.copy()
+			post.update({
+				'location': profile.default_location.pk,
+				'lens': profile.default_lens.slug,
+				'start': self._parsable_date(today - datetime.timedelta(days=profile.default_recent_days)),
+				'end': self._parsable_date(today)
+			})
+			args = (post,)		
+		
+		super(SessionFilterForm, self).__init__(*args, **kwargs)
+
+	def _parsable_date(self, date):
+		"""Return the given date as a parsable string."""
+		return date.strftime("%m/%d/%Y")
 
 	def clean(self):
 		"""Perform extra validation and resolution of data.

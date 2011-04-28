@@ -25,18 +25,24 @@ def analysis(request, location_slug=None):
 	page = DjangoPage(request)
 	page.add_render_args({'location': get_object_or_404(Location, slug=location_slug)})
 
+	#  Use default data determined by the user's profile if the form has no POST
+	#  data given to it
 	if request.POST:
-		filter_form = SessionFilterForm(request.POST)
-		if filter_form.is_valid():
-			filters = filter_form.as_filtered_sessions()
-			Lens = filter_form.cleaned_data['lens']
-			lens = Lens(filters)
-			page.add_render_args({
-								'filters': filters,
-								'lens_media': lens.provide_media(),
-								'panels': lens.ordered_panels()})
+		form_data = request.POST
+		profile = None
 	else:
-		filter_form = SessionFilterForm()
+		form_data = None
+		profile = request.user.get_profile()
+	
+	filter_form = SessionFilterForm(form_data, profile=profile)
+	if filter_form.is_valid():
+		filters = filter_form.as_filtered_sessions()
+		Lens = filter_form.cleaned_data['lens']
+		lens = Lens(filters)
+		page.add_render_args({
+							'filters': filters,
+							'lens_media': lens.provide_media(),
+							'panels': lens.ordered_panels()})
 
 	page.add_render_args({'filter_form': filter_form})
 	return page.render("panoptes/analysis/base")
