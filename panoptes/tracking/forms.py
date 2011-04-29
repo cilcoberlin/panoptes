@@ -5,7 +5,7 @@ from panoptes.core.fields import WorkstationByMACAddressField
 from panoptes.core.models import OSType
 import panoptes.settings as _settings
 
-import isodate
+from dateutil.parser import parser as dateutil_parser
 
 class CreateSessionForm(forms.Form):
 	"""A form used to validate POST data passed when creating a session."""
@@ -38,8 +38,9 @@ class EndSessionForm(forms.Form):
 
 	def _parse_datetime(self, dt_string):
 		"""Try to return the ISO 8601 datetime string as a datetime instance."""
+		parser = dateutil_parser()
 		try:
-			return isodate.parse_datetime(dt_string)
+			return parser.parse(dt_string)
 		except (AttributeError, ValueError):
 			return None
 
