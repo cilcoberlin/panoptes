@@ -40,8 +40,15 @@ class HourEventList(BaseEventList):
 		self._added_events = []
 
 	def provide_render_args(self):
-		"""Provide the hour to the rendering context."""
-		return {'hour': self.hour}
+		"""Provide the hour range to the rendering context."""
+		start_hour = end_hour = None
+		if self.hour:
+			start_hour = self.hour
+			end_hour = datetime.time(self.hour.hour + 1)
+		return {
+			'end_hour': end_hour,
+			'start_hour': start_hour
+		}
 
 	def get_events(self, *args, **kwargs):
 		"""Abort getting events if no hour has been defined."""

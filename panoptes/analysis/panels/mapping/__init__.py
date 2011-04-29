@@ -8,7 +8,7 @@ from panoptes.analysis.panels.mapping.maps import map_factory
 import os
 
 #  Import all available map types
-from panoptes.analysis.panels.mapping.maps import app, day, hour
+from panoptes.analysis.panels.mapping.maps import app_use, sessions, session_length
 
 class Panel(BasePanel):
 	"""A panel that shows the map of a location and an optional data overlay."""
@@ -22,7 +22,7 @@ class Panel(BasePanel):
 		css = {'all': ("panoptes/css/analysis/panels/mapping/map.css",)}
 
 	def __init__(self, *args, **kwargs):
-		"""Create a new event list."""
+		"""Create a new usage map."""
 
 		slug = kwargs.pop('map', None)
 		if not slug:
@@ -34,8 +34,14 @@ class Panel(BasePanel):
 		self.map = Map(self.sessions)
 
 	def provide_render_args(self):
-		"""Return render args for the chart."""
-		return {'map': self.map.render()}
+		"""Return render args for the map."""
+		if self.map:
+			return self.map.provide_render_args()
+		return {}
+
+	def provide_template(self):
+		"""Render using the template of the map, if one exists."""
+		return getattr(self.map, 'template', self.template)
 
 	def _location_media(self, media):
 		"""Return a list of the media used by the location."""

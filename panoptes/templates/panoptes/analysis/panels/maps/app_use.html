@@ -1,3 +1,15 @@
-{% extends "panoptes/analysis/panels/maps/base.html" %}
+{% extends "panoptes/analysis/panels/maps/panel.html" %}
 
+{% load i18n %}
 
+{% block subtitle %}
+
+	{% if app %}
+		{% blocktrans with app.name as app %}
+			Uses of <strong>{{ app }}</strong> per workstation
+		{% endblocktrans %}
+	{% else %}
+		{{ block.super }}
+	{% endif %}
+
+{% endblock %}

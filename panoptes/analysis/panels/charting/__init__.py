@@ -4,7 +4,7 @@ from django import forms
 from django.utils.importlib import import_module
 
 from panoptes.analysis.panels import BasePanel
-from panoptes.analysis.panels.charting.charts.base import ChartBase
+from panoptes.analysis.panels.charting.charts.base import ChartRegistry
 
 #  Import all chart types so that they can register themselves
 from panoptes.analysis.panels.charting.charts import bar
@@ -14,13 +14,10 @@ def chart_factory(chart_slug):
 	Return a BaseChart-descended class matching the string given in
 	`chart_slug`, otherwise return None.
 	"""
-	try:
-		return ChartBase.registered_charts[chart_slug]
-	except KeyError:
-		raise ValueError("No chart could be found with the slug %s" % chart_slug)
+	return ChartRegistry.get_registry_item(chart_slug)
 
 class Panel(BasePanel):
-	"""A panel that shows a list of events for a given period."""
+	"""A panel that shows a chart of usage for a given period."""
 
 	slug = "chart"
 	template = "panoptes/analysis/panels/charts/panel.html"
@@ -41,8 +38,14 @@ class Panel(BasePanel):
 		self.chart = Chart(self.sessions)
 
 	def provide_render_args(self):
-		"""Return args for rendering the chart."""
-		return {'chart': self.chart.render()}
+		"""Return render args for the chart."""
+		if self.chart:
+			return self.chart.provide_render_args()
+		return {}
+
+	def provide_template(self):
+		"""Render using the template of the chart, if one exists."""
+		return getattr(self.chart, 'template', self.template)
 
 	def provide_media(self):
 		"""Return the media used by the chart."""

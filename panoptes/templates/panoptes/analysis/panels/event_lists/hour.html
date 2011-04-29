@@ -5,9 +5,9 @@
 {% block subtitle %}{% trans "Repeating events per hour" %}{% endblock %}
 
 {% block meta %}
-	{% if hour %}
+	{% if start_hour %}
 		<p class="times filter">
-			{{ hour|time }}
+			{{ start_hour|time }} &ndash; {{ end_hour|time }}
 		</p>
 	{% endif %}
 {% endblock %}

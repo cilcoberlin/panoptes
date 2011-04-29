@@ -11,6 +11,6 @@ class Lens(BaseLens):
 
 	panels = (
 		('chart',  {'chart': 'bar'}),
-		('map',    {'map': 'hours'}),
+		('map',    {'map': 'sessions'}),
 		('events', {'list': 'hour'})
 	)

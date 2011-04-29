@@ -1,47 +1,52 @@
+{% extends "panoptes/analysis/panels/charts/panel.html" %}
 
 {% load i18n %}
 
-{% if plot %}
+{% block content %}
 
-	<table class="chart bar x__{{ sessions.x_axis.slug }} y__{{ sessions.y_axis.slug }}">
+	{% if plot %}
 
-		<caption>
-			{% blocktrans with sessions.x_axis.name as x and sessions.y_axis.name as y %}
-				{{ y }} per {{ x }}
-			{% endblocktrans %}
-		</caption>
+		<table class="chart bar x__{{ sessions.x_axis.slug }} y__{{ sessions.y_axis.slug }}">
 
-		<thead>
-			<tr>
-				<th>{{ sessions.x_axis.name }}</th>
-				<th>{{ sessions.y_axis.name }}</th>
-			</tr>
-		</thead>
+			<caption>
+				{% blocktrans with sessions.x_axis.name as x and sessions.y_axis.name as y %}
+					{{ y }} per {{ x }}
+				{% endblocktrans %}
+			</caption>
 
-		{% if plot.y_labels %}
-			<tfoot class="y-labels labels__{{ plot.y_labels|length }}">
-				{% for label in plot.y_labels %}
-					<tr class="label">
-						<td class="x"></td>
-						<td class="y">{{ label }}</td>
+			<thead>
+				<tr>
+					<th>{{ sessions.x_axis.name }}</th>
+					<th>{{ sessions.y_axis.name }}</th>
+				</tr>
+			</thead>
+
+			{% if plot.y_labels %}
+				<tfoot class="y-labels labels__{{ plot.y_labels|length }}">
+					{% for label in plot.y_labels %}
+						<tr class="label">
+							<td class="x"></td>
+							<td class="y">{{ label }}</td>
+						</tr>
+					{% endfor %}
+				</tfoot>
+			{% endif %}
+
+			<tbody class="points">
+
+				{% for point in plot %}
+					<tr id="bar-chart-point-{{ forloop.counter0 }}" title="{{ point.y_verbose }}" class="point point__{{ point.x_serialized|iriencode }} {% if not point.y_value %}no-data{% endif %} {% if point.is_keypoint and not forloop.last %}keypoint{% endif %} {% if forloop.last %}last{% endif %}">
+						<td class="x">{{ point.x_label }}</td>
+						<td class="y percent__{{ point.y_percent }}">
+							<a href="#{{ point.x_value|slugify }}" class="detail-link">{{ point.y_label }}</a>
+						</td>
 					</tr>
 				{% endfor %}
-			</tfoot>
-		{% endif %}
 
-		<tbody class="points">
+			</tbody>
 
-			{% for point in plot %}
-				<tr id="bar-chart-point-{{ forloop.counter0 }}" title="{{ point.y_verbose }}" class="point point__{{ point.x_serialized|iriencode }} {% if not point.y_value %}no-data{% endif %} {% if point.is_keypoint and not forloop.last %}keypoint{% endif %} {% if forloop.last %}last{% endif %}">
-					<td class="x">{{ point.x_label }}</td>
-					<td class="y percent__{{ point.y_percent }}">
-						<a href="#{{ point.x_value|slugify }}" class="detail-link">{{ point.y_label }}</a>
-					</td>
-				</tr>
-			{% endfor %}
+		</table>
 
-		</tbody>
+	{% endif %}
 
-	</table>
-
-{% endif %}
+{% endblock %}

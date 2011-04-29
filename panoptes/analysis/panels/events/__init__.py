@@ -31,13 +31,15 @@ class Panel(BasePanel):
 
 	def provide_template(self):
 		"""Render using the template of the event list, if one exists."""
-		return getattr(self.event_list, 'template', None)
+		return getattr(self.event_list, 'template', self.template)
 
 	def provide_render_args(self):
 		"""Return render args for an event list panel and the chosen list."""
 		render_args = {'event_list': self.event_list}
-		if self.event_list:
+		try:
 			render_args.update(self.event_list.provide_render_args())
+		except AttributeError:
+			pass
 		return render_args
 
 	def provide_media(self):

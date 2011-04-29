@@ -1,6 +1,5 @@
 
 from django import forms
-from django.template.loader import render_to_string
 
 from panoptes.analysis.axes.x.workstations import Axis as Workstations
 from panoptes.analysis.exceptions import InvalidAxisPair
@@ -15,8 +14,7 @@ class BaseMap(object):
 	__metaclass__ = MapRegistry
 
 	slug = None
-
-	template = "panoptes/analysis/layout.html"
+	template = None
 
 	def __init__(self, sessions):
 		"""Create the location map.
@@ -28,8 +26,8 @@ class BaseMap(object):
 		self.location = sessions.location
 		self.sessions = sessions
 
-	def render(self):
-		"""Return HTML of the location with an optional overlay of data."""
+	def provide_render_args(self):
+		"""Provide the location and special row object for rendering."""
 
 		#  Attempt to create an overlay as a plot of the sessions, with the x-axis
 		#  remapped to workstations from whatever it was before
@@ -42,10 +40,10 @@ class BaseMap(object):
 			else:
 				plot = sessions.create_plot()
 
-		return render_to_string(self.template, {
+		return {
 			'location': self.location,
 			'rows':     LayoutRow.objects.overlaid_rows(self.location, plot)
-		})
+		}
 
 	@property
 	def media(self):

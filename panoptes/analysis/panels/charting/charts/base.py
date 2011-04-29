@@ -1,23 +1,9 @@
 
 from django import forms
 
-class ChartBase(type):
-	"""Custom metaclass for charts that maintains a repository of all charts."""
+from panoptes.core.utils.registry import create_registry
 
-	registered_charts = {}
-
-	def __init__(self, name, bases, attrs):
-		"""Update our registry of declared charts, keyed by the chart slug."""
-
-		super(ChartBase, self).__init__(name, bases, attrs)
-
-		if name == "BaseChart":
-			return
-
-		if not attrs.get('slug', None):
-			raise TypeError("You must provide a slug for the %(chart)s chart" % {'chart': name})
-
-		ChartBase.registered_charts[attrs['slug']] = self
+ChartRegistry = create_registry('slug')
 
 class BaseChart(object):
 	"""Abstract base class for a chart.
@@ -27,9 +13,10 @@ class BaseChart(object):
 	structured in the same way as the attributes of a Django Media class.
 	"""
 
-	__metaclass__ = ChartBase
+	__metaclass__ = ChartRegistry
 
 	slug = None
+	template = None
 
 	def __init__(self, sessions):
 		"""
@@ -38,9 +25,9 @@ class BaseChart(object):
 		"""
 		self.sessions = sessions
 
-	def render(self):
-		"""Return HTML describing the chart."""
-		return u""
+	def provide_render_args(self):
+		"""Allow a chart to return render arguments.."""
+		return {}
 
 	@property
 	def media(self):
