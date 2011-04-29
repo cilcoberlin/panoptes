@@ -1,9 +1,13 @@
 
+from django.utils.feedgenerator import rfc3339_date
+
 from panoptes.analysis.panels.events.models import LocationCalendar
 from panoptes.analysis.panels.events.rrule import RepeatRule
 from panoptes.core.utils.registry import create_registry
 
-from gdata.calendar.client import CalendarClient
+from gdata.calendar.client import CalendarClient, CalendarEventQuery
+
+import datetime
 
 EventRegistry = create_registry('slug')
 
@@ -128,12 +132,42 @@ class BaseEventList(object):
 												visibility=self._GCAL_VISIBILITY)
 			feed_args = {'uri': feed_uri}
 			feed_args.update(self.provide_feed_args())
-			feed = client.GetCalendarEventFeed(**feed_args)
+
+			#  If no start or end date have been given by a child event list, restrict
+			#  the query to the dates by which we're filtering sessions, being sure to
+			#  add one day to the end, given that the Google Calendar API treats the end
+			#  date as exclusive
+			has_dates = False
+			if 'query' in feed_args:
+				query = feed_args['query']
+				has_dates = bool(query.start_min) or bool(query.start_max)
+
+			if not has_dates:
+
+				start_dt = end_dt = None
+				if self.filters.start_date:
+					start_dt = self.rfc3339_localized(self.filters.start_date)
+				if self.filters.end_date:
+					end_dt = self.rfc3339_localized(self.filters.end_date + datetime.timedelta(days=1))
+
+				if 'query' in feed_args:
+					new_query = feed_args['query']
+					new_query.start_min = start_dt
+					new_query.start_max = end_dt
+				else:
+					new_query = CalendarEventQuery(start_min=start_dt, start_max=end_dt)
+				feed_args['query'] = new_query
 
 			#  Allow a child event list to determine how to handle an event
+			feed = client.GetCalendarEventFeed(**feed_args)
 			self._events[calendar] = []
 			for event in feed.entry:
 				self.handle_event(calendar, event)
+
+	def rfc3339_localized(self, date_instance):
+		"""Return the date instance as a localized, RFC3339 formatted string."""
+		return rfc3339_date(
+			self.location.timezone.localize(datetime.datetime.combine(date_instance, datetime.time())))
 
 	def provide_feed_args(self):
 		"""Return a dict used to provide additional kwargs to the GetCalendarEventFeed call."""

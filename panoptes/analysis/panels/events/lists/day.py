@@ -2,20 +2,19 @@
 from django.conf import settings
 from django.template.defaultfilters import date as django_date
 
-from cilcdjango.core.util import rfc3339_to_datetime
-
 from panoptes.analysis.panels.events.lists.base import BaseEvent, BaseEventList
 
+from dateutil.parser import parser as dateutil_parser
 from gdata.calendar.client import CalendarEventQuery
 
 import datetime
 from operator import attrgetter
 
 class DayEvent(BaseEvent):
-	"""An event that occurred on a single hour."""
+	"""An event that occurred on a single day."""
 
 	def __init__(self, location, title, repeat_rule, start, end):
-		"""Create the single-hour event.
+		"""Create the single-day event.
 
 		Arguments:
 		title -- a string containing the event's title
@@ -38,7 +37,7 @@ class DayEvent(BaseEvent):
 		return django_date(self.end, settings.DATETIME_FORMAT)
 
 class DayEventList(BaseEventList):
-	"""An event list containing events that occurred on a given hour."""
+	"""An event list containing events that occurred on a given day."""
 
 	slug = "day"
 
@@ -46,10 +45,8 @@ class DayEventList(BaseEventList):
 
 	template = "panoptes/analysis/panels/event_lists/day.html"
 
-	_GCAL_DATE_FORMAT = "%Y-%m-%d"
-
 	def __init__(self,  filters):
-		"""Create an event list for events on the given hour.
+		"""Create an event list for events on the given day.
 
 		Arguments:
 		filters -- a FilteredSessions instance
@@ -81,10 +78,10 @@ class DayEventList(BaseEventList):
 		return sorted(events, key=attrgetter('start'))
 
 	def provide_feed_args(self):
-		"""Return a query that restricts the events to a single hour."""
+		"""Return a query that restricts the events to a single day."""
 		return {'query': CalendarEventQuery(
-										start_min=self.day.strftime(self._GCAL_DATE_FORMAT),
-										start_max=(self.day + datetime.timedelta(days=1)).strftime(self._GCAL_DATE_FORMAT))}
+										start_min=self.rfc3339_localized(self.day),
+										start_max=self.rfc3339_localized(self.day + datetime.timedelta(days=1)))}
 
 	def handle_event(self, calendar, event):
 		"""Add the event to the list.
@@ -103,6 +100,7 @@ class DayEventList(BaseEventList):
 			except IndexError:
 				return
 			else:
+				parser = dateutil_parser()
 				self.add_event(calendar, event.title.text, event.recurrence,
-							rfc3339_to_datetime(when.start), rfc3339_to_datetime(when.end))
+							parser.parse(when.start), parser.parse(when.end))
 				self._added_events.append(event_id)
