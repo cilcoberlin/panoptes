@@ -29,9 +29,10 @@ class Axis(XAxis):
 		which the given sessions occurred.
 		"""
 
-		#  Use the location's open hours as the bounds for the time
-		start_hour = filters.location.earliest_opening
-		end_hour   = filters.location.latest_closing
+		#  Use the filter starting and ending times as our time bounds, as these will
+		#  default to the location's open hours if the user doesn't specify any bounds
+		start_hour = filters.start_time
+		end_hour   = filters.end_time
 
 		#  Return the evenly-spaced hours as the x-axis
 		return [datetime.time(hour) for hour in xrange(start_hour.hour, end_hour.hour + 1)]
