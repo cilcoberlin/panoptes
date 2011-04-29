@@ -33,10 +33,12 @@ panels.beforePanelUpdateSubmit = function(formData, $form, options) {
 //  Update the contents of the supporting panels with the returned markup
 panels.updatePanelMarkup = function(data) {
 
-	if (data.success) {
+	if (data && data.success) {
 		for (var panel in data.markup.panels) {
 			panoptes.analytics.panels[panel].updateMarkup(data.markup.panels[panel]);
 		}
+	} else {
+		alert("Error updating panels.  Please refresh and try again.");
 	}
 
 	//  Reset the filter form's x-index
