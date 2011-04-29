@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from panoptes.core.models import Location, Workstation
+from panoptes.core.models import Location
 
 import re
 
