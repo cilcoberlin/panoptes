@@ -3,8 +3,6 @@ from django import forms
 from django.http import QueryDict
 from django.utils.translation import ugettext_lazy as _
 
-from cilcdjango.core.forms import DjangoForm
-
 from panoptes.analysis import FilteredSessions
 from panoptes.analysis.fields import LensChoiceField, WeekdayChoiceField
 from panoptes.core.fields import LocationField
@@ -12,7 +10,7 @@ from panoptes.core.models import Session
 
 import datetime
 
-class SessionFilterForm(DjangoForm):
+class SessionFilterForm(forms.Form):
 	"""A form for filtering session data based on user bounds."""
 
 	location   = LocationField(label=_("location"))
