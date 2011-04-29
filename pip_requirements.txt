@@ -1,12 +1,9 @@
 django==1.2.3
 django-grappelli==2.3
-django-picklefield
-django-timezones
+django-static
 gdata==2.0.14
 python-dateutil==1.5
 icalendar
-isodate
-lxml
 pytz
 
 -e git://github.com/cilcoberlin/cilcdjango.git@v0.1.3#egg=cilcdjango
