@@ -23,30 +23,15 @@ class Axis(XAxis):
 		sessions.start_time = hour
 		sessions.end_time = hour.replace(hour.hour + 1)
 
-	def _first_hour_for_sessions(self, sessions):
-		"""Return the hour of the first session in the given sessions.
-
-		Arguments:
-		sessions -- a queryset of Session instances
-
-		Returns: an time instance if sessions were found, or None
-
-		"""
-		try:
-			return sessions[0].start_time
-		except IndexError:
-			return None
-
 	def generate_values(self, sessions, filters):
 		"""
 		Return an ordered list of hours, represented as time instances, during
 		which the given sessions occurred.
 		"""
 
-		#  Deterine the earliest and latest hour at which the sessions occurred,
-		#  defaulting to the location's open hours if no sessions could be found
-		start_hour = self._first_hour_for_sessions(sessions.order_by('start_time')) or filters.location.earliest_opening
-		end_hour   = self._first_hour_for_sessions(sessions.order_by('-start_time')) or filters.location.latest_closing
+		#  Use the location's open hours as the bounds for the time
+		start_hour = filters.location.earliest_opening
+		end_hour   = filters.location.latest_closing
 
 		#  Return the evenly-spaced hours as the x-axis
 		return [datetime.time(hour) for hour in xrange(start_hour.hour, end_hour.hour + 1)]
