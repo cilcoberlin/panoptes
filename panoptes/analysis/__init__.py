@@ -23,12 +23,12 @@ class FilteredSessions(object):
 		end_time -- a time instance for the time filter end
 		weekdays -- an iterable of ISO-format weekday numbers
 		x_detail -- an instance of a datetime provided by an x-axis
-		                   
+
 		"""
 
 		self.x_axis = None
 		self.y_axis = None
-		
+
 		self.location   = location
 		self.start_date = start_date
 		self.end_date   = end_date
@@ -36,39 +36,39 @@ class FilteredSessions(object):
 		self.end_time   = end_time
 		self.weekdays   = weekdays
 		self.x_detail   = x_detail
-		
+
 	def _axis_class(self, axis):
 		"""Return the class of the given axis, or None if the axis is None.
-		
+
 		This method exists due to the fact that the axes used are often referred to by
 		class but are sometimes referred to as an instance of the class.  Since most
 		internal calculations expect the axis to be a class, this tries to return the
 		class of an axis instance.
-		
+
 		Arguments
 		axis -- either a class or an instance descended from Axis.
-		
+
 		"""
 		if not axis:
 			return None
 		elif axis.__class__ == AxisBase:
 			return axis
 		else:
-			return axis.__class__  
+			return axis.__class__
 
 	def set_axes(self, x_axis, y_axis):
 		"""Set the axes to instances of the given XAxis and YAxis classes."""
 
 		x_axis_class = self._axis_class(x_axis)
 		y_axis_class = self._axis_class(y_axis)
-		
+
 		if x_axis_class and y_axis_class:
 			if axis_pair_is_valid(x_axis_class, y_axis_class):
 				self.x_axis = x_axis_class()
 				self.y_axis = y_axis_class()
 			else:
 				raise InvalidAxisPair
-			
+
 			#  Allow an x-axis to apply filters to the session
 			if self.x_detail:
 				self.x_axis.filter_sessions_for_detail(self, self.x_detail)
@@ -97,7 +97,7 @@ class FilteredSessions(object):
 		additional filtering if a detail view for a particular x-value is being
 		requested.
 		"""
-						
+
 		return Session.objects.filter_sessions(
 			location=self.location,
 			start_date=self.start_date,
@@ -117,7 +117,7 @@ class FilteredSessions(object):
 		x_values = self.x_axis.generate_values(sessions, self)
 		y_values = self.y_axis.generate_values(self.x_axis, x_values, sessions, self)
 
-		return Plot(self.x_axis, self.y_axis, x_values, y_values)		 
+		return Plot(self.x_axis, self.y_axis, x_values, y_values)
 
 class Plot(object):
 	"""A container for a plot of x- and y-values."""
@@ -152,7 +152,7 @@ class Plot(object):
 					intensity = int(math.ceil((float(y_value) / float(max_y)) * 100))
 				except (ValueError, ZeroDivisionError):
 					intensity = 0
-				self.y_percentages.append(intensity)			
+				self.y_percentages.append(intensity)
 		else:
 			self.y_percentages = [0] * len(self.y_values)
 
@@ -162,11 +162,11 @@ class Plot(object):
 			x_values_length = len(self.x_values)
 			keypoint_step = max(x_values_length / self._KEYPOINT_COUNT, 1)
 			self._keypoints = [not i % keypoint_step for i in xrange(0, x_values_length)]
-			
+
 		#  Assemble a list of evenly spaced rendered y-values that can be used in
 		#  visualizing the data, as long as the y-values are simple integers
 		self.y_labels = []
-		if self._Y_VALUE_POINTS and max_y and isinstance(max_y, (long, int)): 
+		if self._Y_VALUE_POINTS and max_y and isinstance(max_y, (long, int)):
 			current_y = self._Y_VALUE_POINTS
 			while current_y > 0:
 				raw_y = int(max_y * float(current_y) / self._Y_VALUE_POINTS)
@@ -176,7 +176,7 @@ class Plot(object):
 					rendered_y = raw_y
 				self.y_labels.append(rendered_y)
 				current_y -= 1
-				
+
 	@property
 	def max_y_value(self):
 		"""The maximum y-value in the plot."""
@@ -184,15 +184,15 @@ class Plot(object):
 
 	def __iter__(self):
 		return self
-	
+
 	def __getitem__(self, key):
 		"""Return a PlotPoint instance for the point at the given x-value.
-		
+
 		Arguments:
 		key -- an instance of a unique and valid value in the plot's x-values
-		
+
 		Returns: a PlotPoint instance for the found x-value, or raises a KeyError
-		
+
 		"""
 		try:
 			point = self._make_plot_point(self.x_values.index(key))

@@ -7,17 +7,17 @@ from panoptes.analysis.fields import LensChoiceField
 
 class LensField(models.Field):
 	"""A field for selecting a lens used to analyze data.
-	
+
 	The choice of lenses is dynamically built from the currently registered lenses,
 	and the chosen lens is stored using its slug.
 	"""
-	
+
 	__metaclass__ = models.SubfieldBase
-	
+
 	empty_strings_allowed = False
-	
+
 	_DEFAULT_MAX_LENGTH = 100
-	
+
 	def __init__(self, *args, **kwargs):
 		kwargs['max_length'] = self._DEFAULT_MAX_LENGTH
 		super(LensField, self).__init__(*args, **kwargs)
@@ -39,7 +39,7 @@ class LensField(models.Field):
 
 	def to_python(self, value):
 		"""Resolve the lens slug to a Lens class."""
-		
+
 		if value is None:
 			return None
 		try:
@@ -47,7 +47,7 @@ class LensField(models.Field):
 				return value
 		except TypeError:
 			return self._resolve_lens_from_slug(value)
-	
+
 	def get_prep_value(self, value):
 		"""Render the lens as its slug before saving."""
 		return getattr(value, 'slug', None)

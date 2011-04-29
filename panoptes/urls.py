@@ -19,8 +19,8 @@ urlpatterns = patterns('',
 	(r'^accounts/', include('panoptes.accounts.urls')),
 	(r'^analysis/', include('panoptes.analysis.urls')),
 	(r'^api/', include(api_patterns)),
-	
+
 	#  Redirect an index view to the analysis index
 	url(r'^/?$', redirect_to, {'url': 'analysis/', 'permanent': False}),
-	
+
 )

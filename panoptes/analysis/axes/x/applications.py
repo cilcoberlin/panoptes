@@ -13,11 +13,11 @@ class Axis(XAxis):
 	def generate_values(self, sessions, filters):
 		"""Return a list of all available Application instances ordered by name."""
 		return list(Application.objects.all().order_by('name'))
-	
+
 	def render_value(self, value):
 		"""Render the Application instance `value` as the application's name."""
 		return value.name
-	
+
 	def verbose_value(self, value):
 		"""Render the application name with a preposition."""
 		return _("for %(app)s") % {'app': self.render_value(value)}
@@ -25,7 +25,7 @@ class Axis(XAxis):
 	def serialize_value(self, value):
 		"""Serialize the application as its stringified primary key."""
 		return unicode(value.pk)
-	
+
 	def deserialize_value(self, value):
 		"""Deserialize the stringified app PK as an Application instance."""
 		return Application.objects.get(pk=int(value))

@@ -10,7 +10,7 @@ class Lens(BaseLens):
 
 	x_axis_slug = "days"
 	y_axis_slug = "session-count"
-	
+
 	panels = (
 		('chart',  {'chart': 'bar'}),
 		('map',    {'map': 'days'}),

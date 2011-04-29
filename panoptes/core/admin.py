@@ -6,9 +6,9 @@ from panoptes.core.models import *
 class LayoutCellInline(admin.TabularInline):
 
 	model = LayoutCell
-	
+
 class MACAddressInline(admin.TabularInline):
-	
+
 	model = MACAddress
 
 class ApplicationAdmin(admin.ModelAdmin):

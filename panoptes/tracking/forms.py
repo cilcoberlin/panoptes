@@ -14,19 +14,19 @@ class CreateSessionForm(forms.Form):
 	os_type    = forms.ChoiceField(choices=_settings.OS_CHOICES)
 	os_version = forms.CharField(required=False)
 	user       = forms.CharField(required=False)
-	
+
 	def clean(self):
 		"""Normalize some of our passed data."""
-		
+
 		#  Add an 'os' value to the cleaned data that will either be a valid OSType
 		#  instance or None, if the OS type reported doesn't make sense
 		self.cleaned_data['os'] = OSType.objects.get_or_create(
 									self.cleaned_data.get('os_type', None),
 									self.cleaned_data.get('os_version', None))
-		
+
 		#  Create an alias for the MAC address
 		self.cleaned_data['workstation'] = self.cleaned_data.get('mac', None)
-						
+
 		return self.cleaned_data
 
 class EndSessionForm(forms.Form):
@@ -47,7 +47,7 @@ class EndSessionForm(forms.Form):
 		"""
 		Break the apps string passed to the API into a list of two-tuples
 		formatted as (reported_name, duration).
-		
+
 		The cleaned data for this field will be a string with information on each app
 		separated by a comma.  Each chunk of information will consist of the app name
 		and the start and end ISO 8601 datetime of its usage, with each of these data
@@ -69,20 +69,20 @@ class EndSessionForm(forms.Form):
 					duration = dt_delta.seconds
 				all_apps.append((reported_name, duration))
 		return all_apps
-	
+
 	def clean_offset(self):
 		"""Make the offset value be a 0 if it is left blank."""
 		offset = self.cleaned_data.get('offset', None)
 		if offset is None:
 			offset = 0
 		return offset
-	
+
 	def clean(self):
 		"""Normalize some of the passed data."""
-		
+
 		#  Create an alias for the MAC address
 		self.cleaned_data['workstation'] = self.cleaned_data.get('mac', None)
-	
+
 		return self.cleaned_data
-	
-		
+
+

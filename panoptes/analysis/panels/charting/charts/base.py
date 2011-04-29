@@ -21,7 +21,7 @@ class ChartBase(type):
 
 class BaseChart(object):
 	"""Abstract base class for a chart.
-	
+
 	A child chart must define a string value for the `slug` attribute, and can
 	optionally define values for the `js` and `css` attributes, which should be
 	structured in the same way as the attributes of a Django Media class.
@@ -30,7 +30,7 @@ class BaseChart(object):
 	__metaclass__ = ChartBase
 
 	slug = None
-	
+
 	def __init__(self, sessions):
 		"""
 		Create a chart for the data contained in the FilteredSessions instance
@@ -41,7 +41,7 @@ class BaseChart(object):
 	def render(self):
 		"""Return HTML describing the chart."""
 		return u""
-	
+
 	@property
 	def media(self):
 		return forms.Media(getattr(self, 'Media', None))

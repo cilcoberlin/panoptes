@@ -7,7 +7,7 @@ $table-rounded-radius: 25%;
 #map-cilc {
 
 	width: 100%;
-	
+
 	.workstation {
 		border: 3px solid $page-bg-color;
 	}
@@ -35,13 +35,13 @@ $table-rounded-radius: 25%;
 		border-right: none;
 		border-top: none;
 	}
-	
+
 	//  "4" workstations are always in the bottom-right
 	#workstation-a4, #workstation-b4, #workstation-c4, #workstation-d4,
 	#workstation-e4, #workstation-f4 {
 		@include rounded("bottom-right", $table-rounded-radius);
 		border-bottom: none;
 		border-right: none;
-	}	
-	
+	}
+
 }

@@ -44,7 +44,7 @@ class AccountFilterManager(models.Manager):
 		`username` should have their usage sessions for the workstation whose
 		MAC address is given in the `mac_address` string.
 		"""
-	
+
 		if not workstation:
 			return False
 		if username:

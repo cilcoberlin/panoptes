@@ -1,6 +1,6 @@
 
 from django.db.models.aggregates import Count
-from django.utils.translation import ugettext_lazy as _, ungettext 
+from django.utils.translation import ugettext_lazy as _, ungettext
 
 from panoptes.analysis.axes.y import YAxis
 
@@ -46,16 +46,16 @@ class Axis(YAxis):
 	def render_value(self, value):
 		"""Render the integer number of sessions as a stringified integer."""
 		return unicode(value)
-	
+
 	def verbose_value(self, value):
 		"""Render the integer as the number of sessions."""
 		return ungettext("%(count)d session", "%(count)d sessions", value) % {
 			'count': value}
-	
+
 	def serialize_value(self, value):
 		"""Serialize the number as a string."""
 		return unicode(value)
-	
+
 	def deserialize_value(self, value):
 		"""Deserialize the stringified integer as an integer."""
 		return int(value)

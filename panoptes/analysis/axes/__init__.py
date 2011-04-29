@@ -9,7 +9,7 @@ def axis_factory(axis_slug, x=False, y=False):
 	if x == y:
 		raise ValueError("You must set either `x` or `y` to True when searching for an axis slug")
 	key_name = "x" if x else "y"
-	
+
 	try:
 		return AxisBase.registered_axes[key_name][axis_slug]
 	except KeyError:
@@ -25,20 +25,20 @@ class AxisBase(type):
 		"""Update our registry of declared axes."""
 
 		super(AxisBase, self).__init__(name, bases, attrs)
-		
+
 		if name in self._IGNORE_CLASSES:
 			return
-		
+
 		base = self.__class__
 		if not hasattr(base, 'registered_axes'):
 			base.registered_axes = {'x': {}, 'y': {}}
 		try:
 			axis_type = self._CLASS_MAP[bases[0].__name__]
 		except KeyError:
-			raise TypeError("Axis %(axis)s should inherit from the XAxis or YAxis class" % {'axis': name})			
+			raise TypeError("Axis %(axis)s should inherit from the XAxis or YAxis class" % {'axis': name})
 		if self.slug in base.registered_axes[axis_type]:
 			raise TypeError(" axis %(axis)s cannot use the duplicate slug %(slug)s" % {'axis': name, 'slug': self.slug})
-		
+
 		base.registered_axes[axis_type][self.slug] = self
 
 class BaseAxis(object):
@@ -62,10 +62,10 @@ class BaseAxis(object):
 		method on the current class used to generate the values.
 		"""
 		raise NotImplementedError
-	
+
 	def verbose_value(self, value):
 		"""Render the value as a string in a verbose, human-readable format.
-		
+
 		For example, an axis that shows the number of sessions could return a value
 		like "20 sessions" when presented with a `value` of the integer 20.
 		"""
@@ -77,11 +77,11 @@ class BaseAxis(object):
 		query for the current axis' data.
 		"""
 		return []
-	
+
 	def serialize_value(self, value):
 		"""Return a serialized string version of the value."""
 		raise NotImplementedError
-	
+
 	def deserialize_value(self, value):
 		"""
 		Return an instance of a value appropriate to the current axis from a

@@ -66,11 +66,11 @@ class LayoutRowManager(models.Manager):
 		for the Location instance `location` that contains lists of LayoutCell
 		objects ordered by their user-defined order with an extra `overlay`
 		attribute defining the overlaid data.
-		
+
 		Arguments:
 		location -- a Location instance
 		overlay -- a Plot instance mapping workstations to some value
-		
+
 		"""
 
 		#  If an overlay is defined, extend each workstation's data to include
@@ -150,24 +150,24 @@ class LayoutCell(models.Model):
 
 class WorkstationManager(models.Manager):
 	"""Custom manager for the Workstation model."""
-	
+
 	def all_for_location(self, location):
 		"""Return all workstations for a location, ordered by name.
-		
+
 		Arguments:
 		location -- a Location instance
-		
+
 		Returns: a queryset of Workstation instances
-		
+
 		"""
 		return self.filter(location=location, track=True).order_by('name')
-	
+
 	def trackable_by_mac(self, mac_address):
 		"""Return the trackable workstation with the given MAC address.
-		
+
 		Arguments:
 		mac_address -- a string of a workstation's MAC adress
-		
+
 		Returns: a single Workstation instance or None
 		"""
 		try:
@@ -195,32 +195,32 @@ class Workstation(models.Model):
 
 class MACAddress(models.Model):
 	"""A MAC address for a NIC on a workstation."""
-	
+
 	NIC_CHOICES = (
 		("ethernet", _("ethernet")),
 		("wireless", _("wireless")),
 		("other", _("other"))
 	)
-	
+
 	workstation = models.ForeignKey(Workstation, verbose_name=_("workstation"), related_name="mac_addresses")
 	address     = MACAddressField(verbose_name=_("MAC address"), unique=True)
 	nic         = models.CharField(choices=NIC_CHOICES, max_length=25, verbose_name=_("NIC type"))
-	
+
 	class Meta:
-		
+
 		app_label = "panoptes"
 		verbose_name = _("MAC address")
 		verbose_name_plural = _("MAC addresses")
-		
+
 	def __unicode__(self):
 		return self.address
 
 class OSTypeManager(models.Manager):
 	"""Custom manager for the OSType model."""
-	
+
 	def get_or_create(self, name, version):
 		"""Return an OSType type instance matching the passed parameters.
-		
+
 		This will create a new OSType instance if none exists matching the passed
 		values, provided that at least `name` is not None.
 		"""
@@ -238,9 +238,9 @@ class OSType(models.Model):
 	"""An operating system that a machine can run."""
 
 	objects = OSTypeManager()
-	
+
 	name    = models.CharField(max_length=20, choices=_settings.OS_CHOICES, verbose_name=_("name"))
-	version = models.CharField(max_length=20, verbose_name=_("version"), null=True, blank=True) 
+	version = models.CharField(max_length=20, verbose_name=_("version"), null=True, blank=True)
 
 	class Meta:
 
@@ -256,14 +256,14 @@ class SessionManager(models.Manager):
 
 	def start_session(self, workstation, os_instance):
 		"""Create a new session for the given workstation.
-		
+
 		If an error occurs during the creation of the session, None is returned and
 		the session is not tracked.
-		
+
 		Arguments:
 		workstation -- a Workstation instance
 		os_instance -- an instance of an OSType model
-		
+
 		Returns: a new Session instance
 		"""
 
@@ -276,7 +276,7 @@ class SessionManager(models.Manager):
 
 	def end_session(self, workstation, apps_used=[], time_offset=0):
 		"""Finalize the session associated with the workstation.
-		
+
 		If the workstation is valid and the session was properly closed, the Session
 		instance is returned.  If the session could not be closed, None is given.
 
@@ -288,15 +288,15 @@ class SessionManager(models.Manager):
 		positive or negative, to apply to the end time recorded for the session.
 		This can be used to decrease the session length if the end is occurring
 		due to an automatic idle logout, for example.
-		
+
 		Arguments:
-		
+
 		workstation -- a Workstation instance
 		apps_used -- a list of apps used
 		time_offset -- an integer of the number of seconds to add to the end time
-		
+
 		Returns: a Session instance on success or None on failure
-		 
+
 		"""
 
 		#  Close the most recent unclosed session, applying the time offset if
@@ -344,7 +344,7 @@ class SessionManager(models.Manager):
 		queries = [
 			Q(workstation__track=True)
 		]
-		
+
 		if location:
 			queries.append(Q(workstation__location=location))
 		if start_date:
@@ -370,16 +370,16 @@ class SessionManager(models.Manager):
 		if related_fields:
 			queryset = queryset.select_related(*related_fields)
 		return queryset
-	
+
 	def first_session_date_for_location(self, location):
 		"""Return a date instance of the location's first recorded session.
-		
+
 		Arguments:
 		location -- a Location instance
-		
+
 		Returns:
 		A date instance for the first session's date
-		
+
 		"""
 		first_session = self.filter(workstation__location=location).order_by('-start_date')[:1]
 		try:
@@ -412,11 +412,11 @@ class Session(models.Model):
 
 	def add_app_usage(self, reported_name, duration):
 		"""Associate an application usage with the current session.
-		
+
 		Arguments:
 		reported_name -- the name used to report the application
 		duration -- a value in seconds indicating the duration of usage
-		
+
 		"""
 		ApplicationUse.objects.log_usage(self, reported_name, duration)
 
@@ -469,13 +469,13 @@ class ApplicationUseManager(models.Manager):
 
 	def log_usage(self, session, reported_name, duration):
 		"""Associate a usage of an application with a session.
-		
+
 		If the reported application name does not map to an Application
-		instance, no record of the usage will be created.  
-		
+		instance, no record of the usage will be created.
+
 		If a usage of the given app already exists for the session, the passed
 		duration is used to update the duration of the existing app usage record.
-		
+
 		Arguments:
 		session -- a valid Session instance
 		reported_name -- a string of the name used to report the application
@@ -493,8 +493,8 @@ class ApplicationUseManager(models.Manager):
 				self.create(application=application, session=session, duration=duration)
 			else:
 				usage.duration += duration
-				usage.save()		
-					
+				usage.save()
+
 class ApplicationUse(models.Model):
 	"""
 	A record of an application used during a session that can hold information
@@ -515,4 +515,3 @@ class ApplicationUse(models.Model):
 
 	def __unicode__(self):
 		return self.application.__unicode__()
-	

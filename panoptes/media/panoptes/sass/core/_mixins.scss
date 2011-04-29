@@ -4,22 +4,22 @@
 }
 
 @mixin rotate($degrees) {
-	
+
 	$rotate: #{$degrees}deg;
 	$ie: 0;
 	@if $degrees == 90 {
-		$ie: 1; 
+		$ie: 1;
 	} @else if $degrees == 180 {
 		$ie: 2;
 	} @else if $degrees == 270 {
 		$ie: 3;
 	}
-	
+
 	-moz-transform:rotate($rotate);
 	-webkit-transform:rotate($rotate);
 	-o-transform:rotate($rotate);
 	-ms-transform:rotate($rotate);
-	
+
 	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=$ie);
 
 }

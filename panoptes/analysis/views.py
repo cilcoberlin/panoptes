@@ -16,6 +16,7 @@ def index(request):
 	"""Redirect to the default location's index, if one exists."""
 	default_location = get_object_or_404(Location, default=True)
 	return HttpResponseRedirect(
+
 		reverse("analysis", kwargs={'location_slug': default_location.slug}))
 
 @login_required
@@ -33,7 +34,7 @@ def analysis(request, location_slug=None):
 	else:
 		form_data = None
 		profile = request.user.get_profile()
-	
+
 	filter_form = SessionFilterForm(form_data, profile=profile)
 	if filter_form.is_valid():
 		filters = filter_form.as_filtered_sessions()
@@ -50,17 +51,17 @@ def analysis(request, location_slug=None):
 @ajax_view
 def update_supporting_panels(request):
 	"""Return markup for the layout and events panel.
-	
+
 	In addition to the normal filter data, this also receives the integer index of
 	an x-value to use to restrict the data, which is contained in the POST data.
 	"""
-	
+
 	if request.POST:
 		filter_form = SessionFilterForm(request.POST)
 		if filter_form.is_valid():
 			Lens = filter_form.cleaned_data['lens']
 			lens = Lens(filter_form.as_filtered_sessions())
-			
+
 			#  Provide the rendered markup for the panels in a dict keyed by the slug of
 			#  the panel, excepting the primary panel
 			panel_markup = {}

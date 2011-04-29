@@ -41,11 +41,11 @@ class MACAddressField(models.Field):
 
 class TimeZoneField(models.Field):
 	"""A model field that stores a timezone by its string identifier."""
-	
+
 	empty_strings_allowed = False
-	
+
 	_DEFAULT_MAX_LENGTH = 100
-	
+
 	def __init__(self, *args, **kwargs):
 		kwargs['max_length'] = self._DEFAULT_MAX_LENGTH
 		super(TimeZoneField, self).__init__(*args, **kwargs)
@@ -65,9 +65,8 @@ class TimeZoneField(models.Field):
 		"""Return the timezone string as a pytz timezone."""
 		if isinstance(value, datetime.tzinfo):
 			return value
-		
+
 		try:
 			return pytz.timezone(value)
 		except pytz.exceptions.UnknownTimeZoneError:
 			raise TypeError(ugettext("Invalid time zone %(zone)s") % {'zone': value})
-		

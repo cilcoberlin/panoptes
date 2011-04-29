@@ -16,7 +16,7 @@ $y-label-width: 3em;
 	height: $graph-height;
 	position: relative;
 	width: 100%;
-		
+
 	caption {
 		display: none;
 		text-align: left;
@@ -24,7 +24,7 @@ $y-label-width: 3em;
 	thead {
 		display: none;
 	}
-	
+
 	.y-labels {
 		background-color: transparent;
 		height: 100%;
@@ -32,11 +32,11 @@ $y-label-width: 3em;
 		position: absolute;
 		width: 100%;
 		z-index: -1;
-		
+
 		.label {
 			display: block;
-			
-			.x { 
+
+			.x {
 				border-bottom: 1px solid $data-border-color;
 				display: block;
 				position: absolute;
@@ -52,41 +52,41 @@ $y-label-width: 3em;
 			}
 		}
 	}
-	
+
 	//  Make the y-label height match the number of labels
-	@for $i from 1 through 10 {	
-		$label-height: (1 / $i) * 100%; 	
+	@for $i from 1 through 10 {
+		$label-height: (1 / $i) * 100%;
 		.y-labels.labels__#{$i} .label {
 			height: $label-height;
-			.y { height: $label-height; } 
+			.y { height: $label-height; }
 		}
 	}
-	
+
 	.points {
 		display: table-row-group;
 		display: table-footer-group;
 	}
-		
+
 	.point {
 		cursor: pointer;
 		display: table-cell;
 		position: relative;
 		vertical-align: bottom;
-		
+
 		.x {
 			display: none;
 		}
 		.y {
 			display: block;
 			width: 90%;
-			
+
 			.detail-link {
 				background-color: $data-bg-color;
 				display: block;
 				min-width: 0.25em;
 				text-indent: -9000em;
 			}
-			
+
 			.bar-chart-detail {
 				background: $page-bg-color;
 				border: 1px solid $data-bg-color;
@@ -100,7 +100,7 @@ $y-label-width: 3em;
 			}
 		}
 	}
-	
+
 	.point.keypoint {
 		.x {
 			border-left: 1px solid $data-secondary-border-color;
@@ -115,7 +115,7 @@ $y-label-width: 3em;
 			border-left: 1px solid $data-border-color;
 		}
 	}
-	
+
 	.point.active {
 		.detail-link {
 			background-color: $data-bg-emphasis-color;
@@ -127,23 +127,23 @@ $y-label-width: 3em;
 		}
 	}
 
-	//  Set widths for each data point by using a class attribute that contains 
+	//  Set widths for each data point by using a class attribute that contains
 	//  the percentage of the data relative to the maximum value
 	@for $i from 1 through 100 {
-		.y.percent__#{$i} .detail-link { 
+		.y.percent__#{$i} .detail-link {
 			height: #{$graph-height-ems * (0.01 * $i)}em;
 		}
 	}
 	.no-data .detail-link {
 		height: 1px;
 	}
-	
-	//  Show all app labels above the app's bar and hide any unused apps 
+
+	//  Show all app labels above the app's bar and hide any unused apps
 	&.x__apps {
 		.no-data {
 			display: none;
 		}
-		.point {			
+		.point {
 			.x {
 				border: none;
 				display: table-cell !important;
@@ -155,7 +155,7 @@ $y-label-width: 3em;
 			}
 		}
 	}
-	
-	
+
+
 
 }

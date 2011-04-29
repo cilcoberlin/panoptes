@@ -36,11 +36,11 @@ class Axis(YAxis):
 		"""Render the average session length in seconds as an HH:MM string."""
 		minutes = value / 60
 		return u"%d:%02d" % (minutes / 60, minutes % 60)
-	
+
 	def serialize_value(self, value):
 		"""Serialize the duration as a stringified number of seconds."""
 		return unicode(value)
-	
+
 	def deserialize_value(self, value):
 		"""Deserialize the stringified integer as an integer."""
 		return int(value)

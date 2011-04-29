@@ -10,7 +10,7 @@ from panoptes.core.utils.constants import weekday_name
 import re
 
 register = template.Library()
-	
+
 def _make_filter_context(filters):
 	"""Render the context used to render the given filters."""
 
@@ -21,7 +21,7 @@ def _make_filter_context(filters):
 	weekdays = []
 	for weekday in filters.weekdays:
 		weekdays.append(weekday_name(weekday).title())
-	
+
 	return {
 		'location':   filters.location,
 		'start_date': filters.start_date,
@@ -32,7 +32,7 @@ def _make_filter_context(filters):
 		'x_axis':     filters.x_axis.name,
 		'y_axis':     filters.y_axis.name
 	}
-		
+
 @register.inclusion_tag("panoptes/analysis/filters_simple.html")
 @register.simple_tag
 def simple_filters(filters):
@@ -50,7 +50,7 @@ def lens_form(form):
 	return {
 		'lens_form': form
 	}
-	
+
 @register.simple_tag
 def loading_fragment():
 	"""Render the loading fragment with quotes escaped."""

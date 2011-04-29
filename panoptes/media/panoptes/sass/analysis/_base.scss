@@ -4,7 +4,7 @@
 
 body {
 	background: $sidebar-bg-color url("../images/body-bg.jpg") repeat-y ($sidebar-width - $content-padding) 0;
-	color: $page-text-color;	
+	color: $page-text-color;
 }
 
 a {
@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 }
 
-table { 
+table {
 	thead {
 		th {
 			text-align: left;
@@ -38,7 +38,7 @@ table {
 	height: 3em;
 	padding: 1.5em 0;
 	@include sharp-text-shadow($header-text-shadow-color);
-	
+
 	#title {
 		background: url("../images/analytics-icon.png") no-repeat right 0.65em;
 		color: $title-text-color;
@@ -48,7 +48,7 @@ table {
 		padding-left: $sidebar-padding * 0.857;
 		padding-right: 25px;
 		text-transform: uppercase;
-		
+
 		.location {
 			color: $header-text-color;
 			font-weight: bold;
@@ -58,13 +58,13 @@ table {
 		font-size: 2em;
 		line-height: 1.5em;
 		margin-left: $sidebar-width * 0.5;
-		
+
 		.axes, .filter {
 			display: block;
 			float: left;
 		}
 		.axes {
-			
+
 		}
 		.filter {
 			border: 1px solid lighten($header-bg-color, 20%);
@@ -76,24 +76,24 @@ table {
 			@include rounded("all", 1.5em);
 		}
 	}
-	
+
 	#account-info {
 		float: right;
 		line-height: 1.5em;
 		margin: 0.75em 3em;
 		@include sharp-text-shadow($header-text-shadow-color);
-		
+
 		a {
 			color: $header-text-color;
 		}
 		a:hover {
 			color: $title-text-color;
 		}
-		
+
 		.info {
 			float: left;
 			margin-right: 1.5em;
-			
+
 			&.name {
 				color: $title-text-color;
 				font-weight: bold;
@@ -106,7 +106,7 @@ table {
 #content {
 	padding-top: 1.5em;
 	margin-left: $sidebar-width;
-	clear: both;	
+	clear: both;
 }
 
 #footer {
@@ -116,14 +116,14 @@ table {
 	color: $header-text-color;
 	padding: 1.5em 0;
 	width: $sidebar-width - $content-padding;
-	
+
 	p {
 		line-height: 1.5em;
 		padding-left: $sidebar-padding;
-		
+
 		a {
 			color: $title-text-color;
-		}	
+		}
 	}
 }
 
@@ -134,7 +134,7 @@ table {
 	height: 100%;
 	width: 100%;
 
-	.overlay {	
+	.overlay {
 		background: $loading-bg-color;
 		@include opacity($loading-opacity);
 		position: absolute;
@@ -142,7 +142,7 @@ table {
 		width: 100%;
 		z-index: 9000;
 	}
-	
+
 	.loading {
 		background: $page-bg-color;
 		border: 3px double lighten($loading-bg-color, $loading-opacity);
@@ -155,7 +155,7 @@ table {
 		top: 50%;
 		width: 10em;
 		z-index: 9001;
-	
+
 		.message {
 			background: url("../images/loading.gif") no-repeat top center;
 			color: $loading-text-color;
@@ -163,6 +163,6 @@ table {
 			padding-top: 2em;
 		}
 	}
-	
-	
+
+
 }

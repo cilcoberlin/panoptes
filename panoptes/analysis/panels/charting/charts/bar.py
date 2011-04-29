@@ -8,7 +8,7 @@ class BarChart(BaseChart):
 
 	slug = "bar"
 
-	class Media:	
+	class Media:
 		js = ('panoptes/js/analysis/charts/bar.js',)
 		css = {
 			'all': ('panoptes/css/analysis/panels/charting/charts/bar.css',)}
@@ -20,4 +20,3 @@ class BarChart(BaseChart):
 			'plot':     self.sessions.create_plot(),
 			'sessions': self.sessions
 		})
-	

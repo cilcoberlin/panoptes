@@ -12,31 +12,31 @@ from panoptes.analysis.panels.mapping.maps import app, day, hour
 
 class Panel(BasePanel):
 	"""A panel that shows the map of a location and an optional data overlay."""
-	
+
 	slug = "map"
 	template = "panoptes/analysis/panels/maps/panel.html"
-	
+
 	_LOCATION_MEDIA_BASE = "panoptes/%(media)s/analysis/panels/mapping/locations/"
-	
+
 	class Media:
-		css = {'all': ("panoptes/css/analysis/panels/mapping/map.css",)}	
-	
+		css = {'all': ("panoptes/css/analysis/panels/mapping/map.css",)}
+
 	def __init__(self, *args, **kwargs):
 		"""Create a new event list."""
-		
+
 		slug = kwargs.pop('map', None)
 		if not slug:
 			raise ValueError("You must provide a 'map' argument to the mapping panel")
-		
+
 		super(Panel, self).__init__(*args, **kwargs)
-		
+
 		Map = map_factory(slug)
 		self.map = Map(self.sessions)
-		
+
 	def provide_render_args(self):
 		"""Return render args for the chart."""
 		return {'map': self.map.render()}
-	
+
 	def _location_media(self, media):
 		"""Return a list of the media used by the location."""
 		media_file = os.path.join(
@@ -46,12 +46,12 @@ class Panel(BasePanel):
 			return (os.path.join(settings.MEDIA_URL, media_file),)
 		else:
 			return ()
-	
+
 	def provide_media(self):
 		"""Return the media used by the chart and the location."""
 		location_media = forms.Media(
 									js=self._location_media("js"),
 									css={'all': self._location_media("css")})
 		return forms.Media(self.Media) + location_media + self.map.media
-		
-	
+
+

@@ -27,7 +27,7 @@ class SessionFilterForm(DjangoForm):
 
 	def __init__(self, *args, **kwargs):
 		"""Accept a 'profile' kwarg that provides default data."""
-		
+
 		profile = kwargs.pop('profile', None)
 		if profile:
 			today = datetime.date.today()
@@ -39,8 +39,8 @@ class SessionFilterForm(DjangoForm):
 				'start': self._parsable_date(today - datetime.timedelta(days=profile.default_recent_days)),
 				'end': self._parsable_date(today)
 			})
-			args = (post,)		
-		
+			args = (post,)
+
 		super(SessionFilterForm, self).__init__(*args, **kwargs)
 
 	def _parsable_date(self, date):
@@ -49,42 +49,42 @@ class SessionFilterForm(DjangoForm):
 
 	def clean(self):
 		"""Perform extra validation and resolution of data.
-		
+
 		This adds an `x_detail` key to the cleaned data containing the resolved
 		x-value whose details should be shown, and also makes sure that the dates and
 		times are coherent.
 		"""
-		
+
 		cleaned_data = self.cleaned_data
 		today = datetime.date.today()
-		
+
 		#  If a start date is provided but the end date is left blank, end on the
 		#  current date
 		if cleaned_data.get('start',None) and not cleaned_data.get('end', None):
 			cleaned_data['end'] = today
-			
+
 		#  If an end date is provided and no start date is given, start at the first
 		#  date on which sessions were recorded, or a year ago, if no sessions exist
 		if cleaned_data.get('end', None) and not cleaned_data.get('start', None):
 			cleaned_data['start'] = Session.objects.first_session_date_for_location(cleaned_data['location'])
-		
+
 		#  If the date bounds are left blank, default to viewing the past week
 		if not cleaned_data.get('start', None) and not cleaned_data.get('end', None):
 			cleaned_data['start'] = today - datetime.timedelta(weeks=1)
 			cleaned_data['end'] = today
-		
+
 		#  Have empty time filters use the opening or closing time of the location
 		if not cleaned_data.get('start_time', None):
 			cleaned_data['start_time'] = cleaned_data['location'].earliest_opening
 		if not cleaned_data.get('end_time', None):
 			cleaned_data['end_time'] = cleaned_data['location'].latest_closing
-		
+
 		#  Make sure that the start and end dates and times are properly ordered
 		if cleaned_data['start'] > cleaned_data['end']:
 			raise forms.ValidationError(_("The start must come before the end date"))
 		if cleaned_data['start_time'] > cleaned_data['end_time']:
 			raise forms.ValidationError(_("The start time must come before the end time"))
-		
+
 		#  Resolve the x- and y-value details if possible
 		if cleaned_data.get('x_detail', None):
 			x_axis = cleaned_data['lens'].x_axis()
@@ -94,9 +94,9 @@ class SessionFilterForm(DjangoForm):
 			cleaned_data['y_detail'] = y_axis.deserialize_value(cleaned_data['y_detail'])
 		cleaned_data['x_detail'] = cleaned_data['x_detail'] or None
 		cleaned_data['y_detail'] = cleaned_data['y_detail'] or None
-			
+
 		return cleaned_data
-	
+
 	def as_filtered_sessions(self):
 		"""
 		If the form was successfully validated, return a FilteredSessions
@@ -104,7 +104,7 @@ class SessionFilterForm(DjangoForm):
 		"""
 
 		data = self.cleaned_data
-		
+
 		filtered_sessions = FilteredSessions(
 			location=data['location'],
 			start_date=data.get('start', None),

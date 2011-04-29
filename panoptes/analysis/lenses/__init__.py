@@ -52,7 +52,7 @@ class LensBase(type):
 
 		LensBase.registered_lenses[attrs['slug']] = self
 		self.resolve_axes()
-	
+
 class BaseLens(object):
 	"""
 	An abstract lens through which data can be viewed.
@@ -70,7 +70,7 @@ class BaseLens(object):
 	slug = None
 
 	default = False
-	
+
 	panels = ()
 
 	x_axis_slug = None
@@ -78,13 +78,13 @@ class BaseLens(object):
 
 	def __init__(self, sessions):
 		"""Create a lens for viewing the given FilteredSessions instance."""
-		
+
 		if not self.panels:
 			raise TypeError("The %(lens)s lens must define at least one panel" % {'lens': self.__class__.name})
-		
+
 		self.sessions = sessions
 		self._configure_panels()
-		
+
 	@classmethod
 	def make_title(self):
 		"""The verbose name of the lens, built using its x- and y-axis."""
@@ -92,33 +92,33 @@ class BaseLens(object):
 			'y': self.y_axis.name.title(),
 			'x': self.x_axis.name.title()
 		}
-		
+
 	@classmethod
 	def resolve_axes(self):
 		"""Resolve the axis slugs to XAxis and YAxis instances."""
 		self.x_axis = axis_factory(self.x_axis_slug, x=True)
 		self.y_axis = axis_factory(self.y_axis_slug, y=True)
-		
+
 	def _configure_panels(self):
 		"""Resolve the panel slugs to Panel instances."""
-		
+
 		self._panels = []
-		
+
 		for i, panel in enumerate(self.panels):
-			self._panels.append(create_panel(i, panel[0], self.sessions, panel[1])) 
+			self._panels.append(create_panel(i, panel[0], self.sessions, panel[1]))
 
 	def provide_media(self):
 		"""Return a Django media object of all JavaScript and CSS used by the lens."""
-		
+
 		media = forms.Media(js=(), css={})
 		for panel in self._panels:
 			media += panel.provide_media()
 		return media
-	
+
 	def ordered_panels(self):
 		"""Return an ordered list of all panels used by the lens."""
 		return self._panels
-	
+
 	def secondary_panels(self):
 		"""Return a list of all secondary panels, which are all except the first."""
 		return self._panels[1:]

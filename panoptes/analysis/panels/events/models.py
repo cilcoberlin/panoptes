@@ -9,10 +9,10 @@ class LocationCalendarManager(models.Manager):
 
 	def all_for_location(self, location):
 		"""Return a queryset of all LocationCalendar instances for the location.
-		
+
 		Arguments:
 		location -- a Location instance
-		
+
 		"""
 		return location.location_calendars.all().order_by('order')
 

@@ -1,16 +1,16 @@
 
 def get_y_generator_method(x_axis, y_axis):
 	"""Return the y-value generator method for the given x-axis.
-	
+
 	Arguments:
 	x_axis -- an instance of an XAxis class
 	y_axis -- an instance of a YAxis class
-	
-	Returns: 
+
+	Returns:
 	A reference to the y-value generator if it was found, and otherwise None.
-	
+
 	"""
-		
+
 	try:
 		method_name = AXIS_PAIRS[x_axis.slug][y_axis.slug]
 	except KeyError:

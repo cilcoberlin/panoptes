@@ -38,7 +38,7 @@ panels.updatePanelMarkup = function(data) {
 			panoptes.analytics.panels[panel].updateMarkup(data.markup.panels[panel]);
 		}
 	}
-	
+
 	//  Reset the filter form's x-index
 	$(panels.css.formXDetail).val('');
 	panoptes.analytics.hideLoading();
@@ -56,9 +56,9 @@ panoptes.analytics.hideLoading = function() {
 
 //  Update the contents of the current panels for the x-value detail
 panoptes.analytics.showPanelDetail = function(xDetail) {
-	
+
 	$(panels.css.formXDetail).val(xDetail);
-	
+
 	//  Resubmit the filter form to the Ajax URL and use its response to update
 	//  the panels' markup
 	$(panels.css.filterForm).ajaxSubmit({
@@ -67,7 +67,7 @@ panoptes.analytics.showPanelDetail = function(xDetail) {
 		success:      panels.updatePanelMarkup,
 		url:          panoptes.urls['update-supporting-panels']
 	});
-	
+
 };
 
 $(document).ready(function() {
@@ -78,7 +78,7 @@ $(document).ready(function() {
 		panel_slug = panoptes.stringDataFromClass(el, "panel");
 		panoptes.analytics.panels[panel_slug] = new Panel("#" + $(el).attr('id'));
 	});
-		
+
 });
 
 })(panoptes, jQuery);

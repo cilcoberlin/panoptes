@@ -1,6 +1,6 @@
 
 {% load i18n %}
-	
+
 {% if start_date or end_date %}
 
 	<p class="dates filter">
@@ -10,7 +10,7 @@
 			{% if start_date and end_date %}&ndash;{% endif %}
 			{{ end_date|date }}
 		{% endifnotequal %}
-	
+
 	</p>
 
 {% endif %}
@@ -24,7 +24,7 @@
 			{% if start_time and end_time %}&ndash;{% endif %}
 			{{ end_time|time }}
 		{% endifnotequal %}
-	
+
 	</p>
 
 {% endif %}
@@ -32,11 +32,11 @@
 {% if weekdays %}
 
 	<ul class="weekdays filter">
-	
+
 		{% for weekday in weekdays %}
 			<li class="weekday">{{ weekday }}</li>
 		{% endfor %}
-	
+
 	</ul>
-			
+
 {% endif %}
