@@ -3,7 +3,7 @@ django-grappelli==2.3
 django-picklefield
 django-timezones
 gdata==2.0.14
-python-dateutil
+python-dateutil==1.5
 icalendar
 isodate
 lxml
