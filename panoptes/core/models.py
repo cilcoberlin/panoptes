@@ -349,36 +349,70 @@ class SessionManager(models.Manager):
 		This also accepts a `related_fields` kwarg specifying a list of names of
 		model fields to follow.
 		"""
+		queries = self.create_q_objects(
+			location=location,
+			start_date=start_date,
+			end_date=end_date,
+			start_time=start_time,
+			end_time=end_time,
+			weekdays=weekdays
+		)
+		queryset = self.filter(*queries).order_by("start")
+		if related_fields:
+			queryset = queryset.select_related(*related_fields)
+		return queryset
+
+	def create_q_objects(self, related_prefix=None, location=None, start_date=None, end_date=None, start_time=None, end_time=None, weekdays=[]):
+		"""
+		Generate a list of Q objects to use as an argument to a `filter` call on a
+		queryset manager.  The optional `related_prefix` kwarg can be the name of a
+		field on a model that has a related field of a Session.
+		"""
 
 		queries = [
-			Q(workstation__track=True)
+			self._make_q('workstation__track', True, related_prefix)
 		]
 
 		if location:
-			queries.append(Q(workstation__location=location))
+			queries.append(self._make_q('workstation__location', location, related_prefix))
 		if start_date:
-			queries.append(Q(start_date__gte=start_date))
+			queries.append(self._make_q('start_date__gte', start_date, related_prefix))
 		if end_date:
-			queries.append(Q(end_date__lte=end_date))
+			queries.append(self._make_q('end_date__lte', end_date, related_prefix))
 		if start_time:
-			queries.append(Q(start_time__gte=start_time))
+			queries.append(self._make_q('start_time__gte', start_time, related_prefix))
 		if end_time:
-			queries.append(Q(end_time__lte=end_time))
+			queries.append(self._make_q('end_time__lte', end_time, related_prefix))
 
 		if weekdays:
 			days = None
 			for weekday in weekdays:
-				day_args = {'start__week_day': weekday % 7 + 1}
+				q_key = 'start__week_day'
+				if related_prefix:
+					q_key = "%s__%s" % (related_prefix, q_key)
+				day_args = {q_key: weekday % 7 + 1}
 				if not days:
 					days = Q(**day_args)
 				else:
 					days |= Q(**day_args)
 			queries.append(days)
 
-		queryset = self.filter(*queries).order_by("start")
-		if related_fields:
-			queryset = queryset.select_related(*related_fields)
-		return queryset
+		return queries
+
+	def _make_q(self, query, val, prefix=None):
+		"""Return a Q object describing the given query.
+
+		Arguments:
+		query -- a string that will be the left-hand side of a Q object kwarg
+		val -- an object that will be the right-hand side of a Q object kwarg
+		prefix -- an optional kwarg that will be used as a related-field prefix
+
+		Returns: a Q object
+
+		"""
+		if prefix:
+			query = "%s__%s" % (prefix, query)
+		return Q(**{query: val})
 
 	def first_session_date_for_location(self, location):
 		"""Return a date instance of the location's first recorded session.
@@ -475,6 +509,22 @@ class ReportedApplication(models.Model):
 
 class ApplicationUseManager(models.Manager):
 	"""Custom manager for the ApplicationUse model."""
+
+	def all_for_filters(self, location=None, start_date=None, end_date=None, start_time=None, end_time=None, weekdays=[]):
+		"""
+		Return a queryset of all application uses for any session that occurred during
+		the given date and time bounds.
+		"""
+		q_filters = Session.objects.create_q_objects(
+			related_prefix="session",
+			location=location,
+			start_date=start_date,
+			end_date=end_date,
+			start_time=start_time,
+			end_time=end_time,
+			weekdays=weekdays
+		)
+		return self.filter(*q_filters)
 
 	def log_usage(self, session, reported_name, duration):
 		"""Associate a usage of an application with a session.

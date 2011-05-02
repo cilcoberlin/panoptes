@@ -2,6 +2,7 @@
 from django.utils.translation import ugettext_lazy as _, ungettext
 
 from panoptes.analysis.axes.y import YAxis
+from panoptes.core.models import ApplicationUse
 
 class Axis(YAxis):
 	"""A y-axis of the number of sessions that used an application."""
@@ -14,8 +15,21 @@ class Axis(YAxis):
 		Return a list of the number of sessions that used the  Application instance
 		contained in `x_values`.
 		"""
-		return [sessions.filter(apps_used__application=app).count()
-			for app in x_values]
+
+		app_uses = ApplicationUse.objects.all_for_filters(
+			location=filters.location,
+			start_date=filters.start_date,
+			end_date=filters.end_date,
+			start_time=filters.start_time,
+			end_time=filters.end_time,
+			weekdays=filters.weekdays
+		)
+
+		by_app = dict(zip(x_values, [0] * len(x_values)))
+		for app_use in app_uses.select_related('application').iterator():
+			by_app[app_use.application] += 1
+
+		return [by_app[app] for app in x_values]
 
 	def workstation_values(self, x_values, sessions, filters):
 		"""
