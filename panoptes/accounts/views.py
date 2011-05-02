@@ -3,9 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from cilcdjango.core.pages import DjangoPage
-
 from panoptes.accounts.forms import UserPreferencesForm
+from panoptes.core.utils.pages import Page
 
 _PREFS_UPDATED_KEY = "preferences_updated"
 
@@ -13,7 +12,7 @@ _PREFS_UPDATED_KEY = "preferences_updated"
 def preferences(request):
 	"""A view that allows the user to edit their preferences."""
 
-	page = DjangoPage(request)
+	page = Page(request)
 	profile = request.user.get_profile()
 
 	if request.POST:

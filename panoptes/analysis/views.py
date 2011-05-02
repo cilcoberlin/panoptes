@@ -4,12 +4,10 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
-from cilcdjango.core.decorators import ajax_view
-from cilcdjango.core.exceptions import AjaxError
-from cilcdjango.core.pages import DjangoPage
-
 from panoptes.analysis.forms import SessionFilterForm
 from panoptes.core.models import Location
+from panoptes.core.utils.ajax import AjaxError, ajax_view
+from panoptes.core.utils.pages import Page
 
 @login_required
 def index(request):
@@ -22,7 +20,7 @@ def index(request):
 def analysis(request, location_slug=None):
 	"""Base page for the analysis of tracked sessions."""
 
-	page = DjangoPage(request)
+	page = Page(request)
 	page.add_render_args({'location': get_object_or_404(Location, slug=location_slug)})
 
 	#  Use default data determined by the user's profile if the form has no POST
@@ -45,7 +43,7 @@ def analysis(request, location_slug=None):
 							'panels': lens.ordered_panels()})
 
 	page.add_render_args({'filter_form': filter_form})
-	return page.render("panoptes/analysis/base")
+	return page.render("panoptes/analysis/base.html")
 
 @ajax_view
 def update_supporting_panels(request):
