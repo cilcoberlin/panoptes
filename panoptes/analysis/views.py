@@ -16,7 +16,6 @@ def index(request):
 	"""Redirect to the default location's index, if one exists."""
 	default_location = get_object_or_404(Location, default=True)
 	return HttpResponseRedirect(
-
 		reverse("analysis", kwargs={'location_slug': default_location.slug}))
 
 @login_required
