@@ -30,20 +30,22 @@ panels.beforePanelUpdateSubmit = function(formData, $form, options) {
 	panoptes.analytics.showLoading();
 };
 
+//  Show an error message if the panel update fails
+panels.onPanelUpdateError = function(hxr, status, error) {
+	alert("Error updating panels.  Please refresh and try again");
+	panoptes.analytics.hideLoading();
+};
+
 //  Update the contents of the supporting panels with the returned markup
 panels.updatePanelMarkup = function(data) {
-
 	if (data && data.success) {
 		for (var panel in data.markup.panels) {
 			panoptes.analytics.panels[panel].updateMarkup(data.markup.panels[panel]);
+			panoptes.analytics.hideLoading();
 		}
 	} else {
-		alert("Error updating panels.  Please refresh and try again.");
+		panels.onPanelUpdateError();
 	}
-
-	//  Reset the filter form's x-index
-	$(panels.css.formXDetail).val('');
-	panoptes.analytics.hideLoading();
 };
 
 //  Show a page-wide loading message
@@ -53,6 +55,7 @@ panoptes.analytics.showLoading = function() {
 
 //  Hide the page-wide loading message
 panoptes.analytics.hideLoading = function() {
+	$(panels.css.formXDetail).val('');
 	$(panels.css.loading).remove();
 };
 
@@ -66,6 +69,7 @@ panoptes.analytics.showPanelDetail = function(xDetail) {
 	$(panels.css.filterForm).ajaxSubmit({
 		beforeSubmit: panels.beforePanelUpdateSubmit,
 		dataType:     'json',
+		error:        panels.onPanelUpdateError,
 		success:      panels.updatePanelMarkup,
 		url:          panoptes.urls['update-supporting-panels']
 	});
