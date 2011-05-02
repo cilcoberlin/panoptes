@@ -32,8 +32,11 @@ class Axis(YAxis):
 		Return a list of the number of sessions that occurred during the hour
 		specified by each time instance in the `x_values` list.
 		"""
-		return [sessions.filter(start_time__gte=hour, end_time__lte=hour.replace((hour.hour + 1) % 24)).count()
-			for hour in x_values]
+
+		by_hour = dict(zip(range(0, 24), [0] * 24))
+		for s in sessions.order_by('start_time'):
+			by_hour[s.start_time.hour] += 1
+		return [by_hour[hour.hour] for hour in x_values]
 
 	def workstation_values(self, x_values, sessions, filters):
 		"""
