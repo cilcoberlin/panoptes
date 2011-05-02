@@ -34,7 +34,7 @@ class Axis(YAxis):
 		"""
 
 		by_hour = dict(zip(range(0, 24), [0] * 24))
-		for s in sessions.order_by('start_time'):
+		for s in sessions.order_by('start_time').iterator():
 			by_hour[s.start_time.hour] += 1
 		return [by_hour[hour.hour] for hour in x_values]
 
