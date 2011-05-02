@@ -4,10 +4,10 @@ from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from cilcdjango.core.models import AutoSlugField
-
 from panoptes.core.model_fields import MACAddressField, TimeZoneField
 import panoptes.settings as _settings
+
+from autoslug import AutoSlugField
 
 import datetime
 
@@ -42,7 +42,7 @@ class Location(models.Model):
 	objects          = LocationManager()
 
 	name             = models.CharField(max_length=100, verbose_name=_("name"))
-	slug             = AutoSlugField(max_length=100, populate_from="name", verbose_name=_("slug"))
+	slug             = AutoSlugField(max_length=100, populate_from="name", verbose_name=_("slug"), unique=True)
 	earliest_opening = models.TimeField(verbose_name=_("opens at"))
 	latest_closing   = models.TimeField(verbose_name=_("closes at"))
 	timezone         = TimeZoneField(verbose_name=_("time zone"))

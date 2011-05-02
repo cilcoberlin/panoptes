@@ -1,5 +1,5 @@
 django==1.2.3
-django-grappelli==2.3
+django-autoslug
 django-static
 gdata==2.0.14
 python-dateutil==1.5
