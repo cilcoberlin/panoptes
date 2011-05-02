@@ -6,18 +6,22 @@ DATA_DIR=mac_data
 LA_DIR=/Library/LaunchAgents
 TRACKER_DIR=tracker
 
-#  Get the panoptes URL from the user
+#  Get the panoptes URL from the user or via a command-line argument
 echo
-echo "Enter the base URL for your Panoptes installation, followed by [ENTER]: "
-read panoptes_url
-echo
+if [ "$#" -eq 1 ]; then
+	panoptes_url=$1
+else
+	echo "Enter the base URL for your Panoptes installation, followed by [ENTER]: "
+	read panoptes_url
+	echo
+fi
 
 #  Copy over application files
 echo "Copying files..."
 [ ! -d "${APP_DIR}" ] && mkdir "${APP_DIR}"
 cp -f $TRACKER_DIR/panoptes.py "${APP_DIR}/"
 echo "  All files have been copied"
-echo 
+echo
 
 #  Update the launch agent to pass Panoptes the URL provided to this installer
 echo "Configuring launch agent..."
