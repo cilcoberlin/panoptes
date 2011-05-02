@@ -1,5 +1,5 @@
 
-from panoptes.core.models import Session
+from panoptes.core.models import Location, Session
 from panoptes.core.utils.api import validate
 from panoptes.tracking.forms import CreateSessionForm, EndSessionForm
 from panoptes.tracking.models import AccountFilter
@@ -7,8 +7,35 @@ from panoptes.tracking.models import AccountFilter
 from piston.handler import BaseHandler
 from piston.utils import rc
 
+class LocationHandler(BaseHandler):
+	"""Handler for locations."""
+
+	allowed_methods = ('GET',)
+
+	def read(self, request, slug=None):
+		"""Return information about a location, with the following keys:
+
+		name               - The full display name of the location
+
+		open_workstations  - The number of workstations currently available
+
+		total_workstations - The total number of workstations at the location
+
+		"""
+
+		try:
+			location = Location.objects.get(slug=slug)
+		except Location.DoesNotExist:
+			return rc.BAD_REQUEST
+
+		return {
+			'name': location.name,
+			'open_workstations': location.open_workstation_count,
+			'total_workstations': location.total_workstation_count
+		}
+
 class SessionHandler(BaseHandler):
-	"""Handler for searching for circulating items."""
+	"""Handler for sessions."""
 
 	allowed_methods = ('POST','PUT')
 

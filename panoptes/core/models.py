@@ -57,6 +57,16 @@ class Location(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	@property
+	def open_workstation_count(self):
+		"""The number of currently available workstations."""
+		return self.total_workstation_count - Session.objects.open_for_location(self).count()
+
+	@property
+	def total_workstation_count(self):
+		"""The total number of workstations at the location."""
+		return self.workstations.filter(track=True).count()
+
 class LayoutRowManager(models.Manager):
 	"""Custom manager for the LayoutRow model."""
 
@@ -190,7 +200,7 @@ class Workstation(models.Model):
 	objects = WorkstationManager()
 
 	name     = models.CharField(max_length=50, verbose_name=_("name"))
-	location = models.ForeignKey(Location, verbose_name=_("location"))
+	location = models.ForeignKey(Location, verbose_name=_("location"), related_name="workstations")
 	track    = models.BooleanField(verbose_name=_("track usage?"), default=True)
 
 	class Meta:
@@ -429,6 +439,10 @@ class SessionManager(models.Manager):
 			return first_session[0]
 		except IndexError:
 			return None
+
+	def open_for_location(self, location):
+		"""Return a queryset of open sessions at the given location."""
+		return self.filter(workstation__track=True, workstation__location=location, end__isnull=True)
 
 class Session(models.Model):
 	"""A record of a workstation's usage."""
