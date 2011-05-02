@@ -116,7 +116,7 @@ class LayoutRow(models.Model):
 		percentage of the data relative to all the overlaid values.
 		"""
 
-		for cell in self.cells.all().order_by('order'):
+		for cell in LayoutCell.objects.all_for_row(self):
 			try:
 				cell_overlay = overlay.get(cell.workstation, None)
 			except AttributeError:
@@ -124,8 +124,17 @@ class LayoutRow(models.Model):
 			cell.overlay = cell_overlay
 			yield cell
 
+class LayoutCellManager(models.Manager):
+	"""Custom manager for the LayoutCell model."""
+
+	def all_for_row(self, row):
+		"""Return all cells for a given row, ordered by the user-defined order."""
+		return self.select_related('workstation').filter(row=row).order_by('order')
+
 class LayoutCell(models.Model):
 	"""A single cell in a layout row."""
+
+	objects = LayoutCellManager()
 
 	row         = models.ForeignKey(LayoutRow, verbose_name=_("row"), related_name="cells")
 	workstation = models.ForeignKey('Workstation', verbose_name=_("workstation"), blank=True, null=True)
