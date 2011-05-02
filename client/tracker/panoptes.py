@@ -463,7 +463,6 @@ class PanoptesWindowsTracker(PanoptesTracker):
 	"""
 
 	_WMI_DATE_FORMAT = "%Y%m%d%H%M%S%f"
-	_WMI_DATE_OFFSET = re.compile(r'[+-]\d+$')
 
 	def __init__(self, current_user, wmi_client, panoptes_url):
 		"""Create the Windows tracker.
@@ -501,11 +500,12 @@ class PanoptesWindowsTracker(PanoptesTracker):
 		processes = {}
 		now = datetime.datetime.now()
 
-		#  Get a process list via WMI
+		#  Get a process list via WMI, removing the millisecond and offset components
+		#  of the WMI datetime string when getting the creation time
 		process_list = self._wmi.ExecQuery("Select Caption, CreationDate from Win32_Process")
 		for process in process_list:
 			try:
-				start_dt = datetime.datetime.strptime(re.sub(self._WMI_DATE_OFFSET, '', process.CreationDate), self._WMI_DATE_FORMAT)
+				start_dt = datetime.datetime.strptime(process.CreationDate[:14], self._WMI_DATE_FORMAT)
 			except (TypeError, ValueError):
 				start_dt = now
 			try:
