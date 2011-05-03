@@ -109,7 +109,8 @@
     line-height: 1.5em;
     padding-left: 0.375em;
     padding-top: 30em;
-    position: absolute; }
+    position: absolute;
+    z-index: -1; }
   #panel-chart .chart.bar .point.keypoint .y {
     border-left: 1px solid #cccccc; }
   #panel-chart .chart.bar .point.active .detail-link {

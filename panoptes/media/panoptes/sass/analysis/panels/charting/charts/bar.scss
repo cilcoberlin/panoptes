@@ -110,6 +110,7 @@ $y-label-width: 3em;
 			padding-left: 0.375em;
 			padding-top: $graph-height;
 			position: absolute;
+			z-index: -1;
 		}
 		.y {
 			border-left: 1px solid $data-border-color;
