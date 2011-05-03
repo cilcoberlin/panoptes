@@ -1,0 +1,13 @@
+{% extends "panoptes/core/base.html" %}
+
+{% block body_classes %}error{% endblock %}
+
+{% block body %}
+
+	<h1 id="title">{% block name %}{% endblock %}</h1>
+
+	<p id="description">
+		{% block description %}{% endblock %}
+	</p>
+
+{% endblock %}

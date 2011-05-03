@@ -1,0 +1,13 @@
+{% extends "panoptes/core/errors/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "An Error Occurred" %}{% endblock %}
+
+{% block name %}{% trans "An Error Occurred" %}{% endblock %}
+
+{% block description %}
+	{% blocktrans %}
+		A server error occurred, and the page that you requested could not be created.
+	{% endblocktrans %}
+{% endblock %}

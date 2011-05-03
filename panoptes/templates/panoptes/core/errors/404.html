@@ -1,0 +1,13 @@
+{% extends "panoptes/core/errors/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Page Not Found" %}{% endblock %}
+
+{% block name %}{% trans "Page Not Found" %}{% endblock %}
+
+{% block description %}
+	{% blocktrans %}
+		The page that you requested could not be found.
+	{% endblocktrans %}
+{% endblock %}
