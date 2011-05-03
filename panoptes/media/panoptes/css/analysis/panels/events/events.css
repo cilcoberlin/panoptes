@@ -27,6 +27,9 @@
     padding-top: 0.75em; }
   #panel-events .event-list .events .event .name {
     font-weight: bold; }
+  #panel-events .event-list .events .event .start,
+  #panel-events .event-list .events .event .end {
+    min-width: 5em; }
   #panel-events .event-list .events .event .bounds {
     color: #777777;
     font-size: 0.833em;

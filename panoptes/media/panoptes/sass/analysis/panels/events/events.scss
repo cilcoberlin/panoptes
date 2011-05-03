@@ -52,6 +52,10 @@
 				.days {
 
 				}
+				.start,
+				.end {
+					min-width: 5em;
+				}
 				.bounds {
 					color: $soft-text-color;
 					font-size: 0.833em;

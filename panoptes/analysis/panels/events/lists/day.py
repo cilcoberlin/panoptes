@@ -30,11 +30,11 @@ class DayEvent(BaseEvent):
 
 	def verbose_start(self):
 		"""Show the event end as a datetime."""
-		return django_date(self.start, settings.DATETIME_FORMAT)
+		return django_date(self.start, settings.TIME_FORMAT)
 
 	def verbose_end(self):
 		"""Show the end as a datetime."""
-		return django_date(self.end, settings.DATETIME_FORMAT)
+		return django_date(self.end, settings.TIME_FORMAT)
 
 class DayEventList(BaseEventList):
 	"""An event list containing events that occurred on a given day."""
