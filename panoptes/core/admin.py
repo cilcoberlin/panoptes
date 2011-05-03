@@ -19,18 +19,18 @@ class ApplicationAdmin(admin.ModelAdmin):
 class ApplicationUseAdmin(admin.ModelAdmin):
 
 	list_display = ('application', 'session', 'duration')
-	ordering = ('session__start_date','session__start_time')
+	ordering = ('session__start_date',)
 
 class LayoutCellAdmin(admin.ModelAdmin):
 
-	list_display = ('row', 'workstation', 'order')
-	ordering = ('row__location__name', 'row__order', 'order')
+	list_display = ('row', 'workstation', 'human_order')
+	ordering = ('row__order',)
 
 class LayoutRowAdmin(admin.ModelAdmin):
 
 	inlines = [LayoutCellInline]
-	list_display = ('location', 'order')
-	ordering = ('location__name', 'order')
+	list_display = ('location', 'human_order')
+	ordering = ('order',)
 
 class LocationAdmin(admin.ModelAdmin):
 
@@ -40,7 +40,7 @@ class LocationAdmin(admin.ModelAdmin):
 class OSTypeAdmin(admin.ModelAdmin):
 
 	list_display = ('name', 'version')
-	ordering = ('name', 'version')
+	ordering = ('name',)
 
 class ReportedApplicationAdmin(admin.ModelAdmin):
 

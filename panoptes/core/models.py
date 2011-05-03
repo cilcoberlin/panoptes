@@ -134,6 +134,12 @@ class LayoutRow(models.Model):
 			cell.overlay = cell_overlay
 			yield cell
 
+	def human_order(self):
+		"""Return the 1-indexed order."""
+		return self.order + 1
+	human_order.short_description = _("row number")
+	human_order.admin_order_field = 'order'
+
 class LayoutCellManager(models.Manager):
 	"""Custom manager for the LayoutCell model."""
 
@@ -166,6 +172,12 @@ class LayoutCell(models.Model):
 	def is_workstation(self):
 		"""True if the cell is a Workstation instance."""
 		return self.workstation is not None
+
+	def human_order(self):
+		"""Return the 1-indexed order."""
+		return self.order + 1
+	human_order.short_description = _("cell number")
+	human_order.admin_order_field = 'order'
 
 class WorkstationManager(models.Manager):
 	"""Custom manager for the Workstation model."""
@@ -258,7 +270,7 @@ class OSType(models.Model):
 
 	objects = OSTypeManager()
 
-	name    = models.CharField(max_length=20, choices=_settings.OS_CHOICES, verbose_name=_("name"))
+	name    = models.CharField(max_length=20, choices=_settings.OS_CHOICES, verbose_name=_("operating system"))
 	version = models.CharField(max_length=20, verbose_name=_("version"), null=True, blank=True)
 
 	class Meta:
