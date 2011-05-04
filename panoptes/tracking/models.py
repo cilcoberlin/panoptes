@@ -3,56 +3,40 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from panoptes.core.models import Location
-
-import re
-
-class AccountListField(models.CharField):
-	"""
-	A field that accepts a character-separated list of account names and renders
-	them in python a tuple ordered by the account name.
-	"""
-
-	_separators = [' ', ',']
-
-	def __init__(self, *args, **kwargs):
-		"""
-		Accept an additional `separators` kwarg that allows a user to extend the
-		separators than can be used.
-		"""
-
-		defaults = {'max_length': 255}
-		defaults.update(kwargs)
-
-		super(AccountListField, self).__init__(*args, **defaults)
-
-		if 'separators' in kwargs:
-			self._separators = kwargs['separators']
-
-	def get_internal_type(self):
-		return 'CharField'
-
-	def to_python(self, value):
-		"""Return the account names as a tuple."""
-		return tuple(sorted(re.split(r'[%s]+' % "".join(self._separators), re.sub(r'\s{2,}', r' ', value))))
+from panoptes.tracking.model_fields import AccountListField
 
 class AccountFilterManager(models.Manager):
 	"""Custom manager for the AccountFilter model."""
 
 	def is_user_loggable(self, username, workstation):
-		"""
-		Return True if the user whose username is provided in the string
-		`username` should have their usage sessions for the workstation whose
-		MAC address is given in the `mac_address` string.
+		"""Return True if the user at the workstation should be tracked.
+
+		This works by making a master exclude and include list from the lists of all
+		account filters set up for the location of the workstation.  Precedence is
+		given to the include filter, so if an include list exists and the user is in
+		it, they will be tracked, even if they appear in the exclude list.
+
+		Arguments:
+		username -- a string of the logged-in user's name
+		workstation -- a Workstation instance reporting the session
+
+		Returns: a boolean of whether the user should be tracked
+
 		"""
 
 		if not workstation:
 			return False
 		if username:
-			return all([
-				account_filter.user_is_trackable(username)
-				for account_filter in self.filter(location=workstation.location)])
-		else:
-			return True
+			all_excludes = []
+			all_includes = []
+			for account_filter in self.filter(location=workstation.location):
+				all_excludes.extend(account_filter.exclude or [])
+				all_includes.extend(account_filter.include or [])
+			if username in all_excludes:
+				return False
+			if all_includes and username not in all_includes:
+				return False
+		return True
 
 class AccountFilter(models.Model):
 	"""
@@ -60,9 +44,11 @@ class AccountFilter(models.Model):
 	depending upon the name of the user reported with it.
 	"""
 
+	_USER_NAME_SEPARATOR = ", "
+
 	objects  = AccountFilterManager()
 
-	location = models.ForeignKey(Location, verbose_name="For machines in the")
+	location = models.ForeignKey(Location, verbose_name=_("for machines in the"))
 	include  = AccountListField(verbose_name=_("include users"), help_text=_("only track sessions from these users"), blank=True, null=True)
 	exclude  = AccountListField(verbose_name=_("exclude users"), help_text=_("track sessions from any users except these"), blank=True, null=True)
 
@@ -75,11 +61,15 @@ class AccountFilter(models.Model):
 	def __unicode__(self):
 		return self.location.__unicode__()
 
-	def user_is_trackable(self, username):
-		"""
-		Return True if the user provided in the `username` string should have
-		their session tracked.
-		"""
-		include_list = self.include or []
-		exclude_list = self.exclude or []
-		return username in include_list or username not in exclude_list
+	def _join_user_names(self, names):
+		"""Return the names in the iterable `names` as a joined string."""
+		return self._USER_NAME_SEPARATOR.join(names)
+
+	def include_users(self):
+		return self._join_user_names(self.include)
+	include_users.short_description = _("include users")
+
+	def exclude_users(self):
+		return self._join_user_names(self.exclude)
+	exclude_users.short_description = _("exclude users")
+
