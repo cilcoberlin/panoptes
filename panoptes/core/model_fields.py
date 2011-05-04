@@ -1,6 +1,6 @@
 
 from django.db import models
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 import pytz
 
@@ -10,6 +10,7 @@ import datetime
 class MACAddressField(models.Field):
 	"""A model field that contains a normalized MAC address."""
 
+	description = _("MAC address")
 	empty_strings_allowed = False
 
 	def __init__(self, *args, **kwargs):
@@ -44,6 +45,7 @@ class TimeZoneField(models.Field):
 
 	__metaclass__ = models.SubfieldBase
 
+	description = _("Timezone")
 	empty_strings_allowed = False
 
 	_DEFAULT_MAX_LENGTH = 100

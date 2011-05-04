@@ -1,6 +1,6 @@
 
 from django.db import models
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from panoptes.analysis.lenses import BaseLens, lens_factory
 from panoptes.analysis.fields import LensChoiceField
@@ -14,6 +14,7 @@ class LensField(models.Field):
 
 	__metaclass__ = models.SubfieldBase
 
+	description = _("Data view")
 	empty_strings_allowed = False
 
 	_DEFAULT_MAX_LENGTH = 100
