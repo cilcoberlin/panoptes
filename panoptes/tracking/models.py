@@ -8,6 +8,10 @@ from panoptes.tracking.model_fields import AccountListField
 class AccountFilterManager(models.Manager):
 	"""Custom manager for the AccountFilter model."""
 
+	def _lc_name_list(self, names):
+		"""Return a version of the given names list with every name in lowercase."""
+		return [name.lower() for name in names]
+
 	def is_user_loggable(self, username, workstation):
 		"""Return True if the user at the workstation should be tracked.
 
@@ -27,14 +31,15 @@ class AccountFilterManager(models.Manager):
 		if not workstation:
 			return False
 		if username:
+			username = username.lower()
 			all_excludes = []
 			all_includes = []
 			for account_filter in self.filter(location=workstation.location):
 				all_excludes.extend(account_filter.exclude or [])
 				all_includes.extend(account_filter.include or [])
-			if username in all_excludes:
+			if username in self._lc_name_list(all_excludes):
 				return False
-			if all_includes and username not in all_includes:
+			if all_includes and username not in self._lc_name_list(all_includes):
 				return False
 		return True
 
