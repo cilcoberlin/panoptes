@@ -2,6 +2,7 @@
 from django.contrib import admin
 
 from panoptes.core.models import *
+from panoptes.core.forms import ReportedApplicationForm
 
 class LayoutCellInline(admin.TabularInline):
 
@@ -44,6 +45,7 @@ class OSTypeAdmin(admin.ModelAdmin):
 
 class ReportedApplicationAdmin(admin.ModelAdmin):
 
+	form = ReportedApplicationForm
 	list_display = ('name', 'application', 'location')
 	ordering = ('name',)
 
