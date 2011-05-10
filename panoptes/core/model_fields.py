@@ -75,5 +75,5 @@ class TimeZoneField(models.Field):
 
 		try:
 			return pytz.timezone(value)
-		except pytz.exceptions.UnknownTimeZoneError:
+		except (AttributeError, pytz.exceptions.UnknownTimeZoneError):
 			return pytz.UTC
