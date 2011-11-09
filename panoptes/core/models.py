@@ -246,6 +246,16 @@ class MACAddress(models.Model):
 	def __unicode__(self):
 		return self.address
 
+	def address_with_separators(self, separator=":"):
+		"""Provide the MAC address with the given separator between each pair.
+
+		:param separator: the separator to use between each hexadecimal pair
+		:type separator: str
+
+		"""
+		address = self.address
+		return separator.join([address[i:i+2] for i in xrange(0, len(address), 2)])
+
 class OSTypeManager(models.Manager):
 	"""Custom manager for the OSType model."""
 
@@ -455,6 +465,20 @@ class SessionManager(models.Manager):
 	def open_for_location(self, location):
 		"""Return a queryset of open sessions at the given location."""
 		return self.filter(workstation__track=True, workstation__location=location, end__isnull=True)
+
+	def active_session_for_workstation(self, workstation):
+		"""Get a possible active session for the workstation.
+
+		:param workstation: a workstation that might have an active session
+		:type workstation: Workstation
+		:returns: an active session for the workstation or None
+		:rtype: Session or None
+
+		"""
+		try:
+			return self.filter(workstation=workstation, end__isnull=True).order_by('-start_date')[0]
+		except IndexError:
+			return None
 
 class Session(models.Model):
 	"""A record of a workstation's usage."""

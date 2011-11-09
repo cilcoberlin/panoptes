@@ -1,5 +1,7 @@
 
-from panoptes.core.models import Location, Session
+from django.utils.feedgenerator import rfc3339_date
+
+from panoptes.core.models import Location, Session, Workstation
 from panoptes.core.utils.api import validate
 from panoptes.tracking.forms import CreateSessionForm, EndSessionForm
 from panoptes.tracking.models import AccountFilter
@@ -7,6 +9,75 @@ from panoptes.tracking.models import AccountFilter
 from dateutil.parser import parser as dateutil_parser
 from piston.handler import BaseHandler
 from piston.utils import rc
+
+# Only export the handlers
+__all__ = [
+	"CurrentUsageHandler",
+	"LocationInfoHandler",
+	"LocationActivityHandler",
+	"SessionHandler"
+]
+
+class CurrentUsageHandler(BaseHandler):
+	"""Handler for getting detailed information about a location's current usage."""
+
+	allowed_methods = ('GET',)
+
+	def read(self, request, location_slug=None):
+		"""Return information on the current usage of the location.
+
+		This information is represented as a list of the location's workstations,
+		along with information on whether or not a session is currently in progress
+		at each workstation.  If one is, the datetime at which the session began
+		is provided.
+
+		This information is available in the JSON response via the following keys:
+
+		    workstations      - a list of each workstation at the location
+		        name          - the display name of the workstation
+		        mac_addresses - a list of any MAC addresses for the workstation
+		            type      - a string of the type of MAC address
+		            address   - the actual MAC address, in the form AA:BB:CC:DD:EE:FF
+		        session_start - an ISO 8601 string of the session start time with timezone
+
+		If the location slug provided does not map to a valid location, an HTTP
+		400 bad request response is returned.
+
+		:param location_slug: a slug identifying a location
+		:type location_slug: str
+
+		"""
+		try:
+			location = Location.objects.get(slug=location_slug)
+		except Location.DoesNotExist:
+			return rc.BAD_REQUEST
+
+		# Build a map of the workstations and their current usage
+		workstations = []
+		for workstation in Workstation.objects.all_for_location(location):
+
+			# Get the MAC information for the workstation
+			macs = []
+			for mac in workstation.mac_addresses.all():
+				macs.append({
+					'type':    mac.get_nic_display(),
+					'address': mac.address_with_separators(":")
+				})
+
+			# Provide a properly formatted session start time if one is in progress
+			start = Session.objects.active_session_for_workstation(workstation)
+			if start:
+				start = rfc3339_date(location.timezone.localize(start.start))
+
+			workstations.append({
+				'name': workstation.name,
+				'mac_addresses': macs,
+				'session_start': start
+			})
+
+		return {
+			'workstations': workstations
+		}
 
 class LocationInfoHandler(BaseHandler):
 	"""Handler for locations."""
@@ -19,15 +90,14 @@ class LocationInfoHandler(BaseHandler):
 		This information is available in the JSON response via the following keys:
 
 		    name               - The full display name of the location
-
 			open_workstations  - The number of workstations currently available
-
 			total_workstations - The total number of workstations at the location
 
 		If the location slug provided does not map to a valid location, an HTTP
 		400 bad request response is returned.
 
 		:param location_slug: a slug identifying a location
+		:type location_slug: str
 
 		"""
 		try:
@@ -56,7 +126,7 @@ class LocationActivityHandler(BaseHandler):
 		This method can be passed two optional parameters to specify datetimes
 		after or before which sessions were logged, being the :param:start_dt
 		and :param:end_dt arguments.  Each of these must be a datetime string
-		formatted according to RFC 3339 (i.e., 1937-01-01T12:00:27.87+00:20).
+		formatted according to ISO 8601 (i.e., 1937-01-01T12:00:27.87+00:20).
 		These parameters can be used to specify a date window during which all
 		counted sessions must have occurred.
 
@@ -65,8 +135,11 @@ class LocationActivityHandler(BaseHandler):
 		400 bad request response is returned.
 
 		:param location_slug: a slug identifying a location
-		:key start_dt: an RFC 3339 datetime after which any counted session must be logged
-		:key end_dt: an RFC 3339 datetime before which any counted session must be logged
+		:type location_slug: str
+		:key start_dt: an ISO 8601 datetime after which any counted session must be logged
+		:type start_dt: str
+		:key end_dt: an ISO 8601 datetime before which any counted session must be logged
+		:type end_dt: str
 
 		"""
 
