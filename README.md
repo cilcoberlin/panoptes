@@ -42,9 +42,9 @@ If Panoptes is the only application that you are running in your project, you ca
 add the following lines to your project's `settings.py` file, replacing **PANOPTES**
 with the URL that you configured for your Panoptes installation.
 
-    LOGIN_URL  = '**PANOPTES**/accounts/login'
-    LOGOUT_URL = '**PANOPTES**/accounts/logout'
-    LOGIN_REDIRECT_URL = '**PANOPTES**/'
+    LOGIN_URL  = 'PANOPTES/accounts/login'
+    LOGOUT_URL = 'PANOPTES/accounts/logout'
+    LOGIN_REDIRECT_URL = 'PANOPTES/'
 
 To have Panoptes handle any 404 or 500 errors, you can set the following values
 in your project's `urls.py` file configuration.
@@ -74,7 +74,7 @@ Panoptes installation.
 
      cd client/
      chmod 755 install_mac.sh
-     ./install_mac.sh **PANOPTES_URL**
+     ./install_mac.sh PANOPTES_URL
 
 **Windows Client**
 
@@ -84,7 +84,7 @@ Panoptes repository, then run the following lines, replacing **PANOPTES_URL**
 with the absolute URL to your Panoptes installation:
 
     cd client/
-    install_windows.cmd **PANOPTES_URL**
+    install_windows.cmd PANOPTES_URL
 
 Configuring Panoptes
 --------------------
